@@ -57,12 +57,22 @@ export function AnimatedIllustration({
       targetStroke = vbWidth * 0.0035;
     }
 
+    // Remove inline stroke-width from SVG <style> blocks so GSAP can control it
+    const styleTags = svg.querySelectorAll("style");
+    styleTags.forEach((tag) => {
+      tag.textContent = (tag.textContent || "").replace(/stroke-width:[^;}"]+[;]?/g, "");
+    });
+    // Also clear inline style stroke-width on each element
+    paths.forEach((p) => {
+      (p as SVGElement).style.strokeWidth = "";
+    });
+
     gsap.set(el, { opacity: 1 });
-    gsap.set(paths, { strokeWidth: targetStroke });
+    gsap.set(paths, { attr: { "stroke-width": targetStroke } });
 
     gsap.from(paths, {
       drawSVG: 0,
-      strokeWidth: targetStroke * 0.07,
+      attr: { "stroke-width": targetStroke * 0.07 },
       stagger: 0.08,
       duration,
       delay,
