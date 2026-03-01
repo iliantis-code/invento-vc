@@ -25,9 +25,16 @@ const variants = [
     accent: "#121F45",
   },
   {
-    name: "V4 — Dark Gradient",
-    description: "Ciemny (gray-950), gradient blurs, blue accents, styl Cruip Simple",
+    name: "V4 — Light Cruip",
+    description: "Jasny (white), styl Cruip Simple, browser mockup, sector pills",
     href: "/v4",
+    bg: "#ffffff",
+    accent: "#4f46e5",
+  },
+  {
+    name: "V5 — Dark Cruip",
+    description: "Ciemny (gray-950), styl Cruip Simple, browser mockup, sector pills",
+    href: "/v5",
     bg: "#030712",
     accent: "#3b82f6",
   },
