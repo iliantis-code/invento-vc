@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import { AnimatedIllustration } from "@/components/AnimatedIllustration";
+import { motion } from "motion/react";
 
 const categories = [
   { name: "FINTECH", icon: "/illustrations/fintech.svg" },
@@ -32,7 +36,12 @@ export default function HomePage() {
       {/* Hero */}
       <section className="relative pt-24">
         <div className="mx-auto flex max-w-[1440px] items-center justify-between px-8 pt-20 pb-20 md:px-20 lg:pt-32">
-          <div className="max-w-2xl">
+          <motion.div
+            className="max-w-2xl"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
             <h1 className="font-serif text-6xl leading-[1.1] tracking-tight text-navy italic md:text-7xl lg:text-[5.5rem]">
               Hands-on
               <br />
@@ -55,16 +64,17 @@ export default function HomePage() {
                 <ArrowRight size={14} />
               </Link>
             </div>
-          </div>
+          </motion.div>
 
           <div className="hidden lg:block">
-            <Image
+            <AnimatedIllustration
               src="/illustrations/burza mozgow.svg"
               alt="Innovation illustration"
               width={480}
               height={480}
               className="opacity-80"
-              priority
+              duration={2.5}
+              delay={0.3}
             />
           </div>
         </div>
@@ -87,17 +97,19 @@ export default function HomePage() {
           <div className="flex gap-16">
             {/* Categories */}
             <div className="hidden shrink-0 flex-col gap-1 md:flex">
-              {categories.map((cat) => (
+              {categories.map((cat, i) => (
                 <button
                   key={cat.name}
                   className="group flex flex-col items-center gap-3 rounded-lg px-4 py-4 text-center transition-colors hover:bg-white"
                 >
-                  <Image
+                  <AnimatedIllustration
                     src={cat.icon}
                     alt={cat.name}
                     width={56}
                     height={56}
                     className="opacity-60 transition-opacity group-hover:opacity-100"
+                    duration={1.5}
+                    delay={0.2 * i}
                   />
                   <span
                     className={`text-xs font-bold tracking-wider ${
@@ -113,13 +125,17 @@ export default function HomePage() {
             {/* Companies Grid */}
             <div className="flex-1">
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-                {companies.map((company) => (
-                  <div
+                {companies.map((company, i) => (
+                  <motion.div
                     key={company}
                     className="flex h-20 items-center justify-center rounded-lg border border-border bg-white text-sm font-medium text-navy-muted transition-all hover:border-navy/20 hover:shadow-sm"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-30px" }}
+                    transition={{ duration: 0.4, delay: 0.05 * i }}
                   >
                     {company}
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>

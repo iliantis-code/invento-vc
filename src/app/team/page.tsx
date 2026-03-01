@@ -1,5 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import { LinkedinLogo, MapPin } from "@phosphor-icons/react/dist/ssr";
+import { AnimatedIllustration } from "@/components/AnimatedIllustration";
+import { motion } from "motion/react";
 
 const locations = [
   { city: "Katowice", icon: "/illustrations/Katowice.svg" },
@@ -29,7 +33,12 @@ export default function TeamPage() {
       <section className="pt-32 pb-16">
         <div className="mx-auto max-w-[1440px] px-8 md:px-20">
           <div className="flex flex-col items-start gap-12 lg:flex-row lg:items-center lg:gap-20">
-            <div className="max-w-xl">
+            <motion.div
+              className="max-w-xl"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
               <h1 className="font-serif text-5xl italic text-navy md:text-6xl">
                 team
               </h1>
@@ -39,15 +48,17 @@ export default function TeamPage() {
                 technologicznych, inwestorów i finansistów, skoncentrowany na
                 rozwiązaniach deeptech i digital.
               </p>
-            </div>
+            </motion.div>
 
             <div className="hidden lg:block">
-              <Image
+              <AnimatedIllustration
                 src="/illustrations/Team 10 osob .svg"
                 alt="Team illustration"
                 width={520}
                 height={280}
                 className="opacity-70"
+                duration={3}
+                delay={0.3}
               />
             </div>
           </div>
@@ -58,21 +69,29 @@ export default function TeamPage() {
       <section className="border-t border-border">
         <div className="mx-auto max-w-[1440px] px-8 py-20 md:px-20">
           <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
-            {locations.map((loc) => (
+            {locations.map((loc, i) => (
               <div key={loc.city} className="flex flex-col items-center gap-4">
-                <Image
+                <AnimatedIllustration
                   src={loc.icon}
                   alt={loc.city}
                   width={120}
                   height={120}
                   className="opacity-60"
+                  duration={2}
+                  delay={0.3 * i}
                 />
-                <div className="flex items-center gap-2">
+                <motion.div
+                  className="flex items-center gap-2"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.3 * i + 1 }}
+                >
                   <MapPin size={16} className="text-blue-accent" />
                   <span className="text-sm font-semibold tracking-wide text-navy">
                     {loc.city}
                   </span>
-                </div>
+                </motion.div>
               </div>
             ))}
           </div>
@@ -83,10 +102,14 @@ export default function TeamPage() {
       <section className="bg-bg-soft">
         <div className="mx-auto max-w-[1440px] px-8 py-20 md:px-20">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            {team.map((member) => (
-              <div
+            {team.map((member, i) => (
+              <motion.div
                 key={member.name}
                 className="overflow-hidden rounded-2xl border border-border bg-white p-8 transition-shadow hover:shadow-lg"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, delay: 0.2 * i }}
               >
                 <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
                   <div className="h-32 w-32 shrink-0 overflow-hidden rounded-full">
@@ -117,7 +140,7 @@ export default function TeamPage() {
                     </a>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
