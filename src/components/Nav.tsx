@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/cn";
 
@@ -18,12 +18,11 @@ export function Nav() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm">
       <div className="mx-auto flex max-w-[1440px] items-center justify-between px-8 py-6 md:px-20">
         <Link href="/">
-          <Image
+          <img
             src="/invento-logo.png"
             alt="invento."
             width={140}
             height={36}
-            priority
           />
         </Link>
 

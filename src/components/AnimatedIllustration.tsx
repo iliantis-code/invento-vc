@@ -1,7 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "motion/react";
+import gsap from "gsap";
+import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(DrawSVGPlugin, ScrollTrigger);
 
 interface AnimatedIllustrationProps {
   src: string;
@@ -9,10 +13,10 @@ interface AnimatedIllustrationProps {
   width: number;
   height: number;
   className?: string;
-  /** Delay before animation starts (seconds) */
   delay?: number;
-  /** Duration of drawing animation (seconds) */
   duration?: number;
+  /** Starting stroke width (animates to original) */
+  strokeFrom?: number;
 }
 
 export function AnimatedIllustration({
@@ -23,9 +27,9 @@ export function AnimatedIllustration({
   className = "",
   delay = 0,
   duration = 2,
+  strokeFrom = 0.5,
 }: AnimatedIllustrationProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: true, margin: "-50px" });
   const [svgContent, setSvgContent] = useState<string | null>(null);
 
   useEffect(() => {
@@ -34,29 +38,50 @@ export function AnimatedIllustration({
       .then((text) => setSvgContent(text));
   }, [src]);
 
+  useEffect(() => {
+    if (!svgContent || !containerRef.current) return;
+
+    const el = containerRef.current;
+    const paths = el.querySelectorAll("path, line, polyline, polygon, circle, ellipse, rect");
+
+    if (paths.length === 0) return;
+
+    gsap.set(el, { opacity: 1 });
+    // Ustaw docelową grubość na wszystkich ścieżkach
+    gsap.set(paths, { strokeWidth: 7 });
+
+    gsap.from(paths, {
+      drawSVG: 0,
+      strokeWidth: strokeFrom,
+      stagger: 0.08,
+      duration,
+      delay,
+      ease: "power2.inOut",
+      scrollTrigger: {
+        trigger: el,
+        start: "top 85%",
+        once: true,
+      },
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach((t) => {
+        if (t.trigger === el) t.kill();
+      });
+    };
+  }, [svgContent, delay, duration, strokeFrom]);
+
   return (
-    <motion.div
+    <div
       ref={containerRef}
       role="img"
       aria-label={alt}
       className={`animated-illustration ${className}`}
-      style={{ width, height }}
-      initial={{ opacity: 0 }}
-      animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-      transition={{ duration: 0.3, delay }}
+      style={{ width, height, opacity: 0 }}
     >
       {svgContent && (
-        <div
-          className={`svg-draw ${isInView ? "animate" : ""}`}
-          style={
-            {
-              "--draw-duration": `${duration}s`,
-              "--draw-delay": `${delay}s`,
-            } as React.CSSProperties
-          }
-          dangerouslySetInnerHTML={{ __html: svgContent }}
-        />
+        <div dangerouslySetInnerHTML={{ __html: svgContent }} />
       )}
-    </motion.div>
+    </div>
   );
 }
