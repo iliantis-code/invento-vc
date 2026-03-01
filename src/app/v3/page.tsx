@@ -27,11 +27,11 @@ const stats = [
 ];
 
 const sectors = [
-  { name: "FinTech", icon: "/illustrations/fintech.svg" },
-  { name: "MedTech", icon: "/illustrations/reka smartphone.svg" },
-  { name: "Industry 4.0", icon: "/illustrations/tech industry.svg" },
-  { name: "CleanTech", icon: "/illustrations/clean tech.svg" },
-  { name: "Dual Use", icon: "/illustrations/dron.svg" },
+  { name: "FinTech", icon: "/illustrations/fintech.svg", opacity: 0.7 },
+  { name: "MedTech", icon: "/illustrations/reka smartphone.svg", opacity: 0.4 },
+  { name: "Industry 4.0", icon: "/illustrations/tech industry.svg", opacity: 0.45 },
+  { name: "CleanTech", icon: "/illustrations/clean tech.svg", opacity: 0.7 },
+  { name: "Dual Use", icon: "/illustrations/dron.svg", opacity: 0.6 },
 ];
 
 const team = [
@@ -221,15 +221,16 @@ export default function V3Page() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.35, delay: 0.07 * i }}
               >
-                <AnimatedIllustration
-                  src={cat.icon}
-                  alt={cat.name}
-                  width={120}
-                  height={120}
-                  className="opacity-50 transition-opacity group-hover:opacity-80"
-                  duration={2}
-                  delay={0.15 * i}
-                />
+                <div style={{ opacity: cat.opacity }} className="transition-opacity group-hover:opacity-80">
+                  <AnimatedIllustration
+                    src={cat.icon}
+                    alt={cat.name}
+                    width={120}
+                    height={120}
+                    duration={2}
+                    delay={0.15 * i}
+                  />
+                </div>
                 <span className="text-sm font-bold uppercase tracking-wider text-gray-700">
                   {cat.name}
                 </span>

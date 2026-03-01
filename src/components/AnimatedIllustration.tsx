@@ -67,23 +67,12 @@ export function AnimatedIllustration({
       (p as SVGElement).style.strokeWidth = "";
     });
 
-    // Normalize visual density — more paths on smaller canvas = lower opacity
-    let strokeOpacity = 1;
-    if (vb) {
-      const parts = vb.split(/[\s,]+/).map(Number);
-      const vbArea = (parts[2] || 1000) * (parts[3] || 1000);
-      const density = paths.length / Math.sqrt(vbArea);
-      // Reference: ~0.005 looks "medium". Scale inversely, clamp 0.4–1.0
-      const ref = 0.005;
-      strokeOpacity = Math.min(1, Math.max(0.4, ref / density));
-    }
-
     gsap.set(el, { opacity: 1 });
-    gsap.set(paths, { attr: { "stroke-width": targetStroke, "stroke-opacity": strokeOpacity } });
+    gsap.set(paths, { attr: { "stroke-width": targetStroke } });
 
     gsap.from(paths, {
       drawSVG: 0,
-      attr: { "stroke-width": targetStroke * 0.07, "stroke-opacity": strokeOpacity * 0.3 },
+      attr: { "stroke-width": targetStroke * 0.07 },
       stagger: 0.08,
       duration,
       delay,
