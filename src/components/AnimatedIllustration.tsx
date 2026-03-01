@@ -42,17 +42,27 @@ export function AnimatedIllustration({
     if (!svgContent || !containerRef.current) return;
 
     const el = containerRef.current;
+    const svg = el.querySelector("svg");
     const paths = el.querySelectorAll("path, line, polyline, polygon, circle, ellipse, rect");
 
-    if (paths.length === 0) return;
+    if (paths.length === 0 || !svg) return;
+
+    // Normalize stroke-width relative to viewBox size
+    const vb = svg.getAttribute("viewBox");
+    let targetStroke = 7;
+    if (vb) {
+      const parts = vb.split(/[\s,]+/).map(Number);
+      const vbWidth = parts[2] || 1000;
+      // Scale: 0.35% of viewBox width gives consistent visual thickness
+      targetStroke = vbWidth * 0.0035;
+    }
 
     gsap.set(el, { opacity: 1 });
-    // Ustaw docelową grubość na wszystkich ścieżkach
-    gsap.set(paths, { strokeWidth: 7 });
+    gsap.set(paths, { strokeWidth: targetStroke });
 
     gsap.from(paths, {
       drawSVG: 0,
-      strokeWidth: strokeFrom,
+      strokeWidth: targetStroke * 0.07,
       stagger: 0.08,
       duration,
       delay,
