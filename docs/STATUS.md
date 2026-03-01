@@ -2,11 +2,22 @@
 
 ## Aktualny stan
 - **Branch**: `main`
-- **Faza**: MVP strony — 3 podstrony gotowe z animacjami SVG, wdrożone na Vercel
+- **Faza**: Eksploracja designu — 3 warianty strony (V1 `/`, V2 `/v2`, V3 `/v3`), V1 na Vercel, V2/V3 lokalne
 - Strona live na `invento-vc-iliantis-codes-projects.vercel.app`, repo `iliantis-code/invento-vc`
 
 ## Ostatnie zmiany
 <!-- /wrap dopisuje nowe wpisy tutaj, najnowsze na górze -->
+
+### 2026-03-01 — GSAP DrawSVGPlugin + warianty V2/V3
+- Zamieniono CSS stroke-dasharray na **GSAP DrawSVGPlugin + ScrollTrigger** — lepsza kontrola, stagger, animacja strokeWidth
+- strokeWidth animuje od 0.5 do 7 (oryginalnie 14.87 — o połowę cieńsze)
+- Fix logo: zamieniono `next/image` na `<img>` (Next.js Image nie ładowało PNG)
+- Stworzono **V2** (`/v2`) — ciemny hero, stats cards, SaaS-owy layout
+- Stworzono **V3** (`/v3`) — jasny/kremowy (#faf9f7), styl Streamline (Inspiracja 3), bullet points z ikonami Phosphor, pill buttons
+- Git credentials naprawione przez Admina: per-repo credential helper dla iliantis-code (board #109), normalny `git push` działa
+- Decyzja: CHOSE GSAP DrawSVGPlugin BECAUSE automatyczny stagger, animacja strokeWidth, nie trzeba konwertować path do JSX (REJECTED framer-motion pathLength BECAUSE wymaga ręcznej konwersji każdego path do motion.path)
+- Decyzja: CHOSE podstrony /v2 /v3 BECAUSE łatwiejsze porównanie w przeglądarce (REJECTED osobne branche BECAUSE jeden dev server naraz)
+- Zasada od Macieja: NIE pushować na Vercel z automatu — pracujemy lokalnie, push dopiero po zamknięciu etapu i za zgodą
 
 ### 2026-03-01 — Animacje SVG + Vercel deploy
 - Wdrożono kod na GitHub (`iliantis-code/invento-vc`) i Vercel (auto-deploy z main)
@@ -32,11 +43,13 @@
 | 2026-03-01 | Next.js 16 + Tailwind 4 | Ten sam stack co Elatheris, sprawdzony | — |
 | 2026-03-01 | SVG inline fetch + CSS animation | Jedyny sposób animacji wewnętrznych path SVG | img tag, SVGR (zbyt dużo plików) |
 | 2026-03-01 | Push przez MCP push_files | Lokalne credentials to fundacjafutureminds, repo na iliantis-code | git push (403) |
+| 2026-03-01 | GSAP DrawSVGPlugin zamiast CSS stroke-dasharray | Automatyczny stagger, animacja strokeWidth, działa z wieloma path bez konwersji do JSX | framer-motion pathLength |
+| 2026-03-01 | Warianty jako podstrony /v2 /v3 | Łatwiejsze porównanie w przeglądarce, jeden dev server | Osobne branche |
 
 ## Co nie zadziałało
 - **Figma MCP** — brak fontFamily, kruchy layout, tool limitations
 - **Lokalny build Next.js 16** — `_global-error` prerender useContext null (React 19 bug). Workaround: `global-error.tsx`, ale nie pomaga lokalnie. Vercel OK.
-- **git push** do iliantis-code — 403 (credentials mismatch). Workaround: MCP push_files
+- **git push** do iliantis-code — 403 (credentials mismatch). **NAPRAWIONE** przez Admina: per-repo credential helper (board #109). Normalny `git -c http.proxyAuthMethod=basic push` działa.
 
 ## Otwarte pytania
 - [OPEN] Responsywność mobile — nie testowane jeszcze
@@ -45,7 +58,8 @@
 - [OPEN] Timing animacji SVG — do dopracowania po testach w przeglądarce
 
 ## Backlog
-- [ ] Przetestować animacje lokalnie, dopracować timing
+- [ ] Wybrać finalny wariant designu (V1/V2/V3) i dopracować
+- [ ] Przetestować animacje GSAP, dopracować timing/stagger
 - [ ] Responsywność mobile
 - [ ] Metadata per page (SEO)
 - [ ] Treści: bio członków zespołu, about pillars (unikalne per pillar)
@@ -56,4 +70,4 @@
 - Dev server: `npm run dev` → port 3500
 - GitHub: `iliantis-code/invento-vc` (public)
 - Vercel: `invento-vc-iliantis-codes-projects.vercel.app`
-- Push: przez MCP `push_files` (nie git push)
+- Push: `git -c http.proxyAuthMethod=basic push` (per-repo credential helper dla iliantis-code, board #109)
