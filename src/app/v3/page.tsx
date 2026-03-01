@@ -45,7 +45,7 @@ export default function V3Page() {
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-gray-200/60 bg-[#faf9f7]/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
-          <Link href="/v3" className="text-2xl font-bold tracking-tight">
+          <Link href="/v3" className="text-3xl font-bold tracking-tight">
             invento<span className="text-blue-600">.</span>
           </Link>
           <div className="hidden items-center gap-8 text-sm text-gray-600 md:flex">
@@ -320,7 +320,7 @@ export default function V3Page() {
       {/* Footer */}
       <footer className="border-t border-gray-200/60 bg-[#faf9f7]">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-          <span className="text-2xl font-bold">invento<span className="text-blue-600">.</span></span>
+          <span className="text-3xl font-bold">invento<span className="text-blue-600">.</span></span>
           <div className="flex items-center gap-4">
             <a href="mailto:office@invento.vc" className="text-gray-300 transition-colors hover:text-gray-500">
               <Envelope size={18} />
