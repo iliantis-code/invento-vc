@@ -25,13 +25,6 @@ const variants = [
     accent: "#121F45",
   },
   {
-    name: "V4 — Light Cruip",
-    description: "Jasny (white), styl Cruip Simple, browser mockup, sector pills",
-    href: "/v4",
-    bg: "#ffffff",
-    accent: "#4f46e5",
-  },
-  {
     name: "V5 — Dark Cruip",
     description: "Ciemny (gray-950), styl Cruip Simple, browser mockup, sector pills",
     href: "/v5",
