@@ -211,11 +211,11 @@ export default function V3Page() {
           <h2 className="mb-10 text-3xl font-bold tracking-tight md:text-4xl">
             Investment sectors.
           </h2>
-          <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="grid gap-6 sm:grid-cols-3 lg:grid-cols-5">
             {sectors.map((cat, i) => (
               <motion.div
                 key={cat.name}
-                className="group flex flex-col items-center gap-4 rounded-2xl bg-[#faf9f7] p-6 shadow-sm transition-shadow hover:shadow-md"
+                className="group flex flex-col items-center gap-5 rounded-2xl bg-[#faf9f7] p-8 shadow-sm transition-shadow hover:shadow-md"
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -224,13 +224,13 @@ export default function V3Page() {
                 <AnimatedIllustration
                   src={cat.icon}
                   alt={cat.name}
-                  width={56}
-                  height={56}
+                  width={120}
+                  height={120}
                   className="opacity-50 transition-opacity group-hover:opacity-80"
-                  duration={1.5}
-                  delay={0.1 * i}
+                  duration={2}
+                  delay={0.15 * i}
                 />
-                <span className="text-xs font-bold uppercase tracking-wider text-gray-700">
+                <span className="text-sm font-bold uppercase tracking-wider text-gray-700">
                   {cat.name}
                 </span>
               </motion.div>
