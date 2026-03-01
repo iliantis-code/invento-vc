@@ -2,11 +2,23 @@
 
 ## Aktualny stan
 - **Branch**: `main`
-- **Faza**: Eksploracja designu — 3 warianty strony (V1 `/`, V2 `/v2`, V3 `/v3`), V1 na Vercel, V2/V3 lokalne
-- Strona live na `invento-vc-iliantis-codes-projects.vercel.app`, repo `iliantis-code/invento-vc`
+- **Faza**: Eksploracja designu — 4 warianty strony (V1 `/v1`, V2 `/v2`, V3 `/v3`, V4 `/v4`), showroom na `/`
+- Strona publiczna na `invento-vc-iliantis-codes-projects.vercel.app`, SSO Protection wyłączone
+- Daga (klientka) ogląda warianty. Maciej chce dopracować V4 w kolejnej sesji
 
 ## Ostatnie zmiany
 <!-- /wrap dopisuje nowe wpisy tutaj, najnowsze na górze -->
+
+### 2026-03-01 — Showroom + V4 + normalizacja SVG stroke
+- Stworzono **showroom** na `/` z iframe-preview 4 wariantów (V1 przeniesione z `/` do `/v1`)
+- Stworzono **V4** (`/v4`) — ciemny design inspirowany Cruip Simple: gray-950 bg, gradient blur blobs, blue-500/indigo-400 gradient text, features grid z gap-px, pill badge w hero
+- Naprawiono **nierówną grubość linii SVG** — `AnimatedIllustration` teraz skaluje `stroke-width` proporcjonalnie do viewBox (0.35% width). Usunięto CSS `!important` override z `globals.css`, oczyszczanie inline `stroke-width` z `<style>` bloków SVG
+- Ręczne **opacity per sektor** w V3 — MedTech 0.4, Industry 0.45, Dual Use 0.6, FinTech/CleanTech 0.7 (auto-kalkulacja dawała słabe wyniki)
+- Logo V3 powiększone do `text-3xl`
+- **SSO Protection wyłączone** na Vercel (było `all_except_custom_domains`, blokowało Dagę)
+- Decyzja: CHOSE ręczne opacity per SVG BECAUSE auto-kalkulacja (paths/sqrt(area)) nie odzwierciedla wizualnej wagi (REJECTED auto stroke-opacity BECAUSE zbyt wiele zmiennych wpływających na perceived weight)
+- Decyzja: CHOSE iframe preview w showroomie BECAUSE realistyczny podgląd bez screenshotów (REJECTED statyczne obrazki BECAUSE wymagałyby generowania i aktualizacji)
+- FAILED: Vercel MCP `updateproject` nie obsługuje formatu `ssoProtection` — musiał Maciej wyłączyć ręcznie w dashboard
 
 ### 2026-03-01 — GSAP DrawSVGPlugin + warianty V2/V3
 - Zamieniono CSS stroke-dasharray na **GSAP DrawSVGPlugin + ScrollTrigger** — lepsza kontrola, stagger, animacja strokeWidth
@@ -45,11 +57,15 @@
 | 2026-03-01 | Push przez MCP push_files | Lokalne credentials to fundacjafutureminds, repo na iliantis-code | git push (403) |
 | 2026-03-01 | GSAP DrawSVGPlugin zamiast CSS stroke-dasharray | Automatyczny stagger, animacja strokeWidth, działa z wieloma path bez konwersji do JSX | framer-motion pathLength |
 | 2026-03-01 | Warianty jako podstrony /v2 /v3 | Łatwiejsze porównanie w przeglądarce, jeden dev server | Osobne branche |
+| 2026-03-01 | Ręczne opacity per SVG w sektorach | Auto-kalkulacja (density) nie odzwierciedla wizualnej wagi | Auto stroke-opacity |
+| 2026-03-01 | Stroke-width skalowany do viewBox | 0.35% viewBox width — normalizuje grubość niezależnie od canvas size | Stała wartość strokeWidth:7 |
 
 ## Co nie zadziałało
 - **Figma MCP** — brak fontFamily, kruchy layout, tool limitations
 - **Lokalny build Next.js 16** — `_global-error` prerender useContext null (React 19 bug). Workaround: `global-error.tsx`, ale nie pomaga lokalnie. Vercel OK.
 - **git push** do iliantis-code — 403 (credentials mismatch). **NAPRAWIONE** przez Admina: per-repo credential helper (board #109). Normalny `git -c http.proxyAuthMethod=basic push` działa.
+- **Vercel MCP ssoProtection** — `updateproject` z `ssoProtection: {deploymentType: "none"}` i inne warianty zwracają BAD_REQUEST. Trzeba wyłączyć ręcznie w dashboard.
+- **Auto stroke-opacity normalizacja** — obliczanie density (paths/sqrt(area)) nie daje wizualnie spójnych wyników, bo waga zależy też od długości path, złożoności, pustych przestrzeni w SVG
 
 ## Otwarte pytania
 - [OPEN] Responsywność mobile — nie testowane jeszcze
@@ -58,7 +74,8 @@
 - [OPEN] Timing animacji SVG — do dopracowania po testach w przeglądarce
 
 ## Backlog
-- [ ] Wybrać finalny wariant designu (V1/V2/V3) i dopracować
+- [ ] Dopracować V4 (Maciej chce kontynuować w następnej sesji)
+- [ ] Wybrać finalny wariant designu (V1/V2/V3/V4) i dopracować
 - [ ] Przetestować animacje GSAP, dopracować timing/stagger
 - [ ] Responsywność mobile
 - [ ] Metadata per page (SEO)
