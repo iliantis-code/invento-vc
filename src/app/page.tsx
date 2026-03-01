@@ -24,6 +24,13 @@ const variants = [
     bg: "#faf9f7",
     accent: "#121F45",
   },
+  {
+    name: "V4 — Dark Gradient",
+    description: "Ciemny (gray-950), gradient blurs, blue accents, styl Cruip Simple",
+    href: "/v4",
+    bg: "#030712",
+    accent: "#3b82f6",
+  },
 ];
 
 export default function HomePage() {
@@ -37,7 +44,7 @@ export default function HomePage() {
           Wybierz wariant designu strony
         </p>
 
-        <div className="mt-12 grid gap-8 md:grid-cols-3">
+        <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {variants.map((v) => (
             <Link
               key={v.href}
