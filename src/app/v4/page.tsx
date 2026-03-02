@@ -520,7 +520,7 @@ export default function V5Page() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            Building something exceptional<span className="text-blue-500">?</span>
+            Building something exceptional?
           </motion.h2>
           <p className="mx-auto mt-4 max-w-md text-lg text-gray-400">
             We&apos;re looking for ambitious founders with breakthrough
