@@ -83,7 +83,7 @@ export default function V3Page() {
             >
               <h1 className="text-[2.75rem] font-bold leading-[1.15] tracking-tight text-gray-900 md:text-5xl lg:text-[3.5rem]">
                 Hands-on capital{" "}
-                <span className="text-gray-400">powering exceptional founders.</span>
+                <span className="text-[#8dacc7]">powering exceptional founders.</span>
               </h1>
 
               <p className="mt-6 max-w-md text-[15px] leading-relaxed text-gray-500">
