@@ -181,7 +181,7 @@ export default function V3Page() {
             <div>
               <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
                 Tailor made for{" "}
-                <span className="text-blue-600">deeptech founders.</span>
+                <span className="text-[#8dacc7]">deeptech founders.</span>
               </h2>
               <p className="mt-4 text-[15px] leading-relaxed text-gray-500">
                 Invento is built on the habits that make the best VC partnerships
@@ -200,7 +200,7 @@ export default function V3Page() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.35, delay: 0.06 * i }}
                 >
-                  <div className="mb-3 h-2 w-2 rounded-full bg-blue-600" />
+                  <div className="mb-3 h-2 w-2 rounded-full bg-[#8dacc7]" />
                   <div className="text-sm font-semibold text-gray-900">{f.title}</div>
                   <div className="mt-1 text-xs leading-relaxed text-gray-400">{f.desc}</div>
                 </motion.div>
