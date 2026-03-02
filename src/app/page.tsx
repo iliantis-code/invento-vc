@@ -35,9 +35,9 @@ const variants = [
 
 export default function HomePage() {
   return (
-    <section className="min-h-screen bg-white">
+    <section className="min-h-screen bg-[linear-gradient(135deg,#dbeafe_0%,#fef9ef_30%,#fdf2f8_60%,#fef3c7_100%)]">
       <div className="mx-auto max-w-6xl px-6 pt-24 pb-16">
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900 md:text-4xl">
+        <h1 className="font-[family-name:var(--font-jakarta)] text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl">
           Propozycje designu strony
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-gray-500">
@@ -46,7 +46,7 @@ export default function HomePage() {
           i sposób prezentacji portfolio. Kliknij w kartę, żeby zobaczyć pełną wersję.
         </p>
 
-        <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-20 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {variants.map((v) => (
             <Link
               key={v.href}
