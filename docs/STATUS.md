@@ -2,12 +2,29 @@
 
 ## Aktualny stan
 - **Branch**: `main`
-- **Faza**: Eksploracja designu — 4 warianty strony (V1 `/v1`, V2 `/v2`, V3 `/v3`, V5 `/v5`), showroom na `/`
-- V4 (jasny Cruip) usunięty — został V5 (ciemny Cruip Simple). Strona publiczna na Vercel.
-- Trwa dopracowywanie: V1 hero layout, Team lokalizacje (rozmiary/pozycje SVG), animacje GSAP
+- **Faza**: Dopracowywanie wariantów — logotypy spółek, nawigacja, design V5 (dark) jako główny kierunek
+- V5 mocno rozbudowany: marquee logotypów, niebieskie SVG sektorów (blue-500), niebieska kropka w nagłówkach
+- Nierozwiązany problem: stroke-width SVG dla MedTech/Industry 4.0 — `strokeScale` prop działa ale wymaga dalszego tuningu
 
 ## Ostatnie zmiany
 <!-- /wrap dopisuje nowe wpisy tutaj, najnowsze na górze -->
+
+### 2026-03-02 — Logotypy spółek, nawigacja, design V5
+- **Logotypy spółek pobrane** z invento.vc (12 z 13 — My Owl nie znaleziony, usunięty z listy). Zapisane w `public/logos/`. Podmienione tekstowe nazwy na obrazki w V1, V2, V5
+- **V1 portfolio**: logotypy w białych kartach (h-16, grayscale → kolor on hover, `group-hover`)
+- **V2 portfolio**: logotypy (h-8, grayscale → kolor on hover). Nav zmieniony z białego na dark (jak V5)
+- **V5 hero**: marquee (auto-scroll 120s) z logotypami — `invert mix-blend-screen opacity-60`, `h-20`. Browser mockup usunięty
+- **V5 design**: niebieska kropka (blue-500) w nagłówkach ("founders.", "sectors."), "Get in touch" button → blue-500, SVG sektorów w kolorze blue-500 przez `[&_path]:!stroke-blue-500`
+- **V5 sektory**: layout 3+2 (flex-wrap 33%), SVG powiększone do 160x160
+- **V3**: ikonki Phosphor w hero → szare kropki (gray-400), features → niebieskie kropki (blue-600), "deeptech founders" → blue-600
+- **Nav/Footer**: ukryte na V2/V5 (mają własne), widoczne na V1/team/about. Showroom (/) — tylko logo bez linków
+- **Team**: usunięta animacja GSAP z ilustracji ludzi → statyczny `<img>`
+- **About V2**: naprawione 404 ilustracji (microchip ai.svg → robot.svg, VR.svg → handshake.svg)
+- **AnimatedIllustration**: nowy prop `strokeScale` (domyślnie 0.35) — pozwala kontrolować grubość stroke per instancję
+- FAILED: `strokeScale` dla MedTech/Industry 4.0 — mimo zmiany wartości stroke renderuje się gruby. Problem prawdopodobnie w tym że SVG mają inline stroke-width w `<style>` bloku które nadpisują GSAP. Wymaga debugowania w następnej sesji
+- FAILED: `brightness-0 invert` na logotypach z białym tłem (JPG/PNG) — daje jednolite szare prostokąty bo białe tło też się invertuje. Rozwiązanie: `invert mix-blend-screen` (czarne staje się przezroczyste w trybie screen)
+- Decyzja: CHOSE `invert mix-blend-screen` dla logotypów na ciemnym tle BECAUSE jedyny sposób na przezroczyste tło bez konwersji do PNG z alpha (REJECTED brightness-0 invert BECAUSE zamienia białe tło w szary prostokąt)
+- Decyzja: CHOSE usunięcie My Owl z portfolio BECAUSE logo niedostępne na serwerze WP pod żadnym wariantem URL
 
 ### 2026-03-02 — V4→V5 redesign Cruip Simple + poprawki V1/Team
 - **V4 przerobiony** z ciemnego na jasny styl Cruip Simple (white bg, gray-900 buttons, indigo-600 accenty, browser mockup, sector pills, partner quote, portfolio highlights). Nowe sekcje: browser mockup, sector pills, partner quote blockquote, portfolio highlights cards
@@ -84,6 +101,7 @@
 - [OPEN] Timing animacji SVG — do dopracowania po testach w przeglądarce
 
 ## Backlog
+- [ ] **FIX**: stroke-width MedTech/Industry 4.0 w V5 — `strokeScale` prop nie działa, SVG inline style nadpisuje
 - [ ] Dalsze dopracowanie V5 i V1 (Maciej testuje na żywo)
 - [ ] Wybrać finalny wariant designu (V1/V2/V3/V5) i dopracować
 - [ ] Przetestować animacje GSAP, dopracować timing/stagger

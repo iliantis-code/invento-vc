@@ -84,12 +84,9 @@ export default function V3Page() {
 
               <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-3">
                 {features.slice(0, 4).map((f) => (
-                  <div key={f.title} className="flex items-start gap-2.5">
-                    <f.icon size={18} weight="regular" className="mt-0.5 shrink-0 text-gray-400" />
-                    <div>
-                      <div className="text-sm font-medium text-gray-900">{f.title}</div>
-                      <div className="text-xs text-gray-400 leading-snug">{f.desc.split(".")[0]}.</div>
-                    </div>
+                  <div key={f.title} className="flex items-center gap-2.5">
+                    <div className="h-2 w-2 shrink-0 rounded-full bg-gray-400" />
+                    <span className="text-sm font-medium text-gray-900">{f.title}</span>
                   </div>
                 ))}
               </div>
@@ -176,7 +173,7 @@ export default function V3Page() {
             <div>
               <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
                 Tailor made for{" "}
-                <span className="text-gray-400">deeptech founders.</span>
+                <span className="text-blue-600">deeptech founders.</span>
               </h2>
               <p className="mt-4 text-[15px] leading-relaxed text-gray-500">
                 Invento is built on the habits that make the best VC partnerships
@@ -195,7 +192,7 @@ export default function V3Page() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.35, delay: 0.06 * i }}
                 >
-                  <f.icon size={24} weight="regular" className="mb-3 text-gray-400" />
+                  <div className="mb-3 h-2 w-2 rounded-full bg-blue-600" />
                   <div className="text-sm font-semibold text-gray-900">{f.title}</div>
                   <div className="mt-1 text-xs leading-relaxed text-gray-400">{f.desc}</div>
                 </motion.div>

@@ -51,15 +51,12 @@ export default function TeamPage() {
             </motion.div>
 
             <div className="hidden lg:block">
-              <AnimatedIllustration
+              <img
                 src="/illustrations/Team 10 osob .svg"
                 alt="Team illustration"
                 width={520}
                 height={280}
                 className="opacity-70"
-                duration={0.8}
-                delay={0.1}
-                stagger={0.02}
               />
             </div>
           </div>

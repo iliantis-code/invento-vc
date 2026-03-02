@@ -14,13 +14,22 @@ const categories = [
 ];
 
 const companies = [
-  "Quantia", "CThings.co", "Safebox24", "Jivr", "Zjedz.my",
-  "Waven", "Planet Heroes", "My Owl", "Omniscopy", "Gridaly",
-  "Panamint", "ResQuant", "Redigo Carbon",
+  { name: "Quantia", logo: "/logos/quantia.png" },
+  { name: "CThings.co", logo: "/logos/cthingsco.jpg" },
+  { name: "Safebox24", logo: "/logos/safebox24.jpg" },
+  { name: "Jivr", logo: "/logos/jivr.jpg" },
+  { name: "Zjedz.my", logo: "/logos/zjedzmy.jpg" },
+  { name: "Waven", logo: "/logos/waven.jpg" },
+  { name: "Planet Heroes", logo: "/logos/planet-heroes.jpg" },
+  { name: "Omniscopy", logo: "/logos/omniscopy.jpg" },
+  { name: "Gridaly", logo: "/logos/gridaly.jpg" },
+  { name: "Panamint", logo: "/logos/panamint.jpg" },
+  { name: "ResQuant", logo: "/logos/resquant.jpg" },
+  { name: "Redigo Carbon", logo: "/logos/redigo-carbon.png" },
 ];
 
 const stats = [
-  { value: "13", label: "Portfolio companies", sublabel: "across deeptech & digital" },
+  { value: "12", label: "Portfolio companies", sublabel: "across deeptech & digital" },
   { value: "5", label: "Sectors", sublabel: "FinTech · MedTech · Industry 4.0 · CleanTech · Dual Use" },
   { value: "3", label: "Locations", sublabel: "Katowice · Warsaw · USA" },
 ];
@@ -29,7 +38,7 @@ const pillars = [
   {
     title: "Our Focus",
     description: "We invest in early-stage deeptech and digital companies that solve real problems with breakthrough technology.",
-    icon: "/illustrations/microchip ai.svg",
+    icon: "/illustrations/robot.svg",
   },
   {
     title: "Ways of Working",
@@ -39,7 +48,7 @@ const pillars = [
   {
     title: "Our Promise",
     description: "Founder-first approach. We align incentives, protect vision, and work alongside you through every challenge.",
-    icon: "/illustrations/VR.svg",
+    icon: "/illustrations/handshake.svg",
   },
 ];
 
@@ -52,16 +61,18 @@ export default function V2Page() {
   return (
     <div className="min-h-screen bg-white text-gray-900">
       {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-gray-100 bg-white/80 backdrop-blur-md">
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-gray-950/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <Link href="/v2" className="text-xl font-bold tracking-tight text-gray-900">
-            invento<span className="text-blue-600">.</span>
+          <Link href="/v2" className="text-2xl font-bold tracking-tight text-white">
+            invento<span className="text-blue-500">.</span>
           </Link>
-          <div className="flex items-center gap-8">
-            <span className="text-xs font-medium uppercase tracking-widest text-gray-400">V2 Preview</span>
-            <Link href="/" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">
-              ← V1
-            </Link>
+          <div className="hidden items-center gap-8 text-sm text-gray-400 md:flex">
+            <a href="#portfolio" className="transition-colors hover:text-white">Portfolio</a>
+            <a href="#about" className="transition-colors hover:text-white">About</a>
+            <a href="#team" className="transition-colors hover:text-white">Team</a>
+            <a href="#contact" className="rounded-full bg-white px-4 py-1.5 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-200">
+              Get in touch
+            </a>
           </div>
         </div>
       </nav>
@@ -158,18 +169,18 @@ export default function V2Page() {
           <p className="mb-8 text-center text-sm font-medium uppercase tracking-widest text-gray-400">
             Portfolio companies
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4">
+          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
             {companies.map((company, i) => (
-              <motion.span
-                key={company}
-                className="text-sm font-medium text-gray-400 transition-colors hover:text-gray-900"
+              <motion.img
+                key={company.name}
+                src={company.logo}
+                alt={company.name}
+                className="h-8 object-contain grayscale opacity-60 transition-all hover:grayscale-0 hover:opacity-100"
                 initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
+                whileInView={{ opacity: 0.6 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.3, delay: 0.03 * i }}
-              >
-                {company}
-              </motion.span>
+              />
             ))}
           </div>
         </div>

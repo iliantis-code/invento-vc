@@ -14,19 +14,18 @@ const categories = [
 ];
 
 const companies = [
-  "Quantia",
-  "CThings.co",
-  "Safebox24",
-  "Jivr",
-  "Zjedz.my",
-  "Waven",
-  "Planet Heroes",
-  "My Owl",
-  "Omniscopy",
-  "Gridaly",
-  "Panamint",
-  "ResQuant",
-  "Redigo Carbon",
+  { name: "Quantia", logo: "/logos/quantia.png" },
+  { name: "CThings.co", logo: "/logos/cthingsco.jpg" },
+  { name: "Safebox24", logo: "/logos/safebox24.jpg" },
+  { name: "Jivr", logo: "/logos/jivr.jpg" },
+  { name: "Zjedz.my", logo: "/logos/zjedzmy.jpg" },
+  { name: "Waven", logo: "/logos/waven.jpg" },
+  { name: "Planet Heroes", logo: "/logos/planet-heroes.jpg" },
+  { name: "Omniscopy", logo: "/logos/omniscopy.jpg" },
+  { name: "Gridaly", logo: "/logos/gridaly.jpg" },
+  { name: "Panamint", logo: "/logos/panamint.jpg" },
+  { name: "ResQuant", logo: "/logos/resquant.jpg" },
+  { name: "Redigo Carbon", logo: "/logos/redigo-carbon.png" },
 ];
 
 export default function V1Page() {
@@ -124,14 +123,18 @@ export default function V1Page() {
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
                 {companies.map((company, i) => (
                   <motion.div
-                    key={company}
-                    className="flex h-20 items-center justify-center rounded-lg border border-border bg-white text-sm font-medium text-navy-muted transition-all hover:border-navy/20 hover:shadow-sm"
+                    key={company.name}
+                    className="group flex h-40 items-center justify-center rounded-lg border border-border bg-white px-6 transition-all hover:border-navy/20 hover:shadow-sm"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-30px" }}
                     transition={{ duration: 0.4, delay: 0.05 * i }}
                   >
-                    {company}
+                    <img
+                      src={company.logo}
+                      alt={company.name}
+                      className="h-16 max-w-full object-contain grayscale opacity-60 transition-all group-hover:grayscale-0 group-hover:opacity-100"
+                    />
                   </motion.div>
                 ))}
               </div>

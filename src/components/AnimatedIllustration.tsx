@@ -19,6 +19,8 @@ interface AnimatedIllustrationProps {
   strokeFrom?: number;
   /** Stagger between paths in seconds (default 0.08) */
   stagger?: number;
+  /** Override stroke-width normalization percentage (default 0.35) */
+  strokeScale?: number;
 }
 
 export function AnimatedIllustration({
@@ -31,6 +33,7 @@ export function AnimatedIllustration({
   duration = 2,
   strokeFrom = 0.5,
   stagger = 0.08,
+  strokeScale = 0.35,
 }: AnimatedIllustrationProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgContent, setSvgContent] = useState<string | null>(null);
@@ -56,8 +59,7 @@ export function AnimatedIllustration({
     if (vb) {
       const parts = vb.split(/[\s,]+/).map(Number);
       const vbWidth = parts[2] || 1000;
-      // Scale: 0.35% of viewBox width gives consistent visual thickness
-      targetStroke = vbWidth * 0.0035;
+      targetStroke = vbWidth * (strokeScale / 100);
     }
 
     // Remove inline stroke-width from SVG <style> blocks so GSAP can control it
@@ -92,7 +94,7 @@ export function AnimatedIllustration({
         if (t.trigger === el) t.kill();
       });
     };
-  }, [svgContent, delay, duration, strokeFrom, stagger]);
+  }, [svgContent, delay, duration, strokeFrom, stagger, strokeScale]);
 
   return (
     <div

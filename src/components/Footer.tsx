@@ -1,7 +1,17 @@
+"use client";
+
 import Link from "next/link";
-import { EnvelopeSimple, LinkedinLogo } from "@phosphor-icons/react/dist/ssr";
+import { usePathname } from "next/navigation";
+import { EnvelopeSimple, LinkedinLogo } from "@phosphor-icons/react";
 
 export function Footer() {
+  const pathname = usePathname();
+
+  // Ukryj globalny Footer na wariantach — mają własny
+  if (pathname.startsWith("/v2") || pathname.startsWith("/v5")) {
+    return null;
+  }
+
   return (
     <footer className="bg-navy text-white">
       <div className="mx-auto flex max-w-[1440px] items-center justify-between px-8 py-12 md:px-20">

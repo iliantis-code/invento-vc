@@ -17,19 +17,18 @@ import {
 import { AnimatedIllustration } from "@/components/AnimatedIllustration";
 
 const companies = [
-  "Quantia",
-  "CThings.co",
-  "Safebox24",
-  "Jivr",
-  "Zjedz.my",
-  "Waven",
-  "Planet Heroes",
-  "My Owl",
-  "Omniscopy",
-  "Gridaly",
-  "Panamint",
-  "ResQuant",
-  "Redigo Carbon",
+  { name: "Quantia", logo: "/logos/quantia.png" },
+  { name: "CThings.co", logo: "/logos/cthingsco.jpg" },
+  { name: "Safebox24", logo: "/logos/safebox24.jpg" },
+  { name: "Jivr", logo: "/logos/jivr.jpg" },
+  { name: "Zjedz.my", logo: "/logos/zjedzmy.jpg" },
+  { name: "Waven", logo: "/logos/waven.jpg" },
+  { name: "Planet Heroes", logo: "/logos/planet-heroes.jpg" },
+  { name: "Omniscopy", logo: "/logos/omniscopy.jpg" },
+  { name: "Gridaly", logo: "/logos/gridaly.jpg" },
+  { name: "Panamint", logo: "/logos/panamint.jpg" },
+  { name: "ResQuant", logo: "/logos/resquant.jpg" },
+  { name: "Redigo Carbon", logo: "/logos/redigo-carbon.png" },
 ];
 
 const features = [
@@ -66,19 +65,11 @@ const features = [
 ];
 
 const sectors = [
-  { name: "FinTech", icon: "/illustrations/fintech.svg", opacity: 0.85 },
-  {
-    name: "MedTech",
-    icon: "/illustrations/reka smartphone.svg",
-    opacity: 0.5,
-  },
-  {
-    name: "Industry 4.0",
-    icon: "/illustrations/tech industry.svg",
-    opacity: 0.55,
-  },
-  { name: "CleanTech", icon: "/illustrations/clean tech.svg", opacity: 0.85 },
-  { name: "Dual Use", icon: "/illustrations/dron.svg", opacity: 0.75 },
+  { name: "FinTech", icon: "/illustrations/fintech.svg", opacity: 0.85, strokeScale: 0.35 },
+  { name: "MedTech", icon: "/illustrations/reka smartphone.svg", opacity: 0.5, strokeScale: 0.05 },
+  { name: "Industry 4.0", icon: "/illustrations/tech industry.svg", opacity: 0.55, strokeScale: 0.03 },
+  { name: "CleanTech", icon: "/illustrations/clean tech.svg", opacity: 0.85, strokeScale: 0.35 },
+  { name: "Dual Use", icon: "/illustrations/dron.svg", opacity: 0.75, strokeScale: 0.35 },
 ];
 
 const team = [
@@ -95,7 +86,7 @@ const team = [
 ];
 
 const stats = [
-  { value: "13", label: "portfolio companies" },
+  { value: "12", label: "portfolio companies" },
   { value: "5", label: "sectors" },
   { value: "3", label: "locations" },
 ];
@@ -142,7 +133,7 @@ export default function V5Page() {
             </a>
             <a
               href="#contact"
-              className="rounded-full bg-white px-4 py-1.5 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-200"
+              className="rounded-full bg-blue-500 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-blue-600"
             >
               Get in touch
             </a>
@@ -153,23 +144,24 @@ export default function V5Page() {
       {/* Hero — centered */}
       <section className="pt-20">
         <div className="mx-auto max-w-4xl px-6 pb-16 pt-20 text-center md:pt-32">
-          {/* Stat badges */}
-          <motion.div
-            className="mb-8 flex flex-wrap items-center justify-center gap-3"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {stats.map((s) => (
-              <span
-                key={s.label}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3.5 py-1 text-sm text-gray-400"
-              >
-                <span className="font-semibold text-white">{s.value}</span>
-                {s.label}
-              </span>
-            ))}
-          </motion.div>
+          {/* Logo marquee */}
+          <div className="relative mb-10 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+            <motion.div
+              className="flex w-max items-center gap-16 animate-[marquee_120s_linear_infinite]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              {[...companies, ...companies].map((c, i) => (
+                <img
+                  key={`${c.name}-${i}`}
+                  src={c.logo}
+                  alt={c.name}
+                  className="h-20 shrink-0 object-contain grayscale invert mix-blend-screen opacity-60"
+                />
+              ))}
+            </motion.div>
+          </div>
 
           <motion.h1
             className="text-5xl font-bold leading-[1.1] tracking-tight text-white md:text-6xl lg:text-7xl"
@@ -177,7 +169,7 @@ export default function V5Page() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            Hands-on capital powering exceptional founders.
+            Hands-on capital powering exceptional founders<span className="text-blue-500">.</span>
           </motion.h1>
 
           <motion.p
@@ -214,48 +206,6 @@ export default function V5Page() {
         </div>
       </section>
 
-      {/* Browser mockup */}
-      <section className="px-6 pb-20">
-        <motion.div
-          className="mx-auto max-w-4xl overflow-hidden rounded-xl border border-white/10 shadow-2xl shadow-black/30"
-          initial={{ opacity: 0, y: 32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          {/* Browser chrome */}
-          <div className="flex items-center gap-2 border-b border-white/10 bg-gray-900 px-4 py-3">
-            <div className="flex gap-1.5">
-              <span className="h-3 w-3 rounded-full bg-red-500/80" />
-              <span className="h-3 w-3 rounded-full bg-yellow-500/80" />
-              <span className="h-3 w-3 rounded-full bg-green-500/80" />
-            </div>
-            <div className="ml-3 flex-1 rounded-md bg-gray-800 px-3 py-1 text-xs text-gray-400">
-              invento.vc/portfolio
-            </div>
-          </div>
-          {/* Browser content */}
-          <div className="bg-gray-900 px-8 py-10 md:px-12 md:py-14">
-            <p className="mb-6 text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
-              Portfolio companies
-            </p>
-            <div className="flex flex-wrap gap-x-8 gap-y-3">
-              {companies.map((c, i) => (
-                <motion.span
-                  key={c}
-                  className="text-sm font-medium text-gray-400 transition-colors hover:text-white"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: 0.04 * i }}
-                >
-                  {c}
-                </motion.span>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
       {/* Sector pills + icon grid */}
       <section id="portfolio" className="border-t border-white/10 bg-gray-900/50">
         <div className="mx-auto max-w-6xl px-6 py-20">
@@ -267,7 +217,7 @@ export default function V5Page() {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-3xl font-bold tracking-tight text-white md:text-4xl">
-              Investment sectors.
+              Investment sectors<span className="text-blue-500">.</span>
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-lg text-gray-400">
               We invest across five high-conviction sectors where technology
@@ -297,12 +247,12 @@ export default function V5Page() {
             ))}
           </motion.div>
 
-          {/* Sector icon grid */}
-          <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
+          {/* Sector icon grid — 3+2 layout */}
+          <div className="flex flex-wrap justify-center gap-6">
             {sectors.map((cat, i) => (
               <motion.div
                 key={cat.name}
-                className="flex flex-col items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-6"
+                className="flex w-[calc(33.333%-1rem)] flex-col items-center gap-6 rounded-2xl border border-white/10 bg-white/[0.03] p-10"
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -312,14 +262,15 @@ export default function V5Page() {
                   <AnimatedIllustration
                     src={cat.icon}
                     alt={cat.name}
-                    width={80}
-                    height={80}
-                    className="invert"
+                    width={160}
+                    height={160}
+                    className="[&_path]:!stroke-blue-500 [&_line]:!stroke-blue-500 [&_polyline]:!stroke-blue-500 [&_circle]:!stroke-blue-500 [&_ellipse]:!stroke-blue-500 [&_rect]:!stroke-blue-500"
                     duration={2}
                     delay={0.15 * i}
+                    strokeScale={cat.strokeScale}
                   />
                 </div>
-                <span className="text-xs font-bold uppercase tracking-wider text-gray-400">
+                <span className="text-sm font-bold uppercase tracking-wider text-gray-400">
                   {cat.name}
                 </span>
               </motion.div>
