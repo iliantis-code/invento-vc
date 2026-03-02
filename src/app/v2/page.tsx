@@ -131,7 +131,7 @@ export default function V2Page() {
                 height={420}
                 className="opacity-70 [&_.str0]:!stroke-blue-400/60"
                 duration={2.5}
-                delay={0.5}
+                delay={0}
               />
             </motion.div>
           </div>
@@ -215,7 +215,7 @@ export default function V2Page() {
                   height={64}
                   className="opacity-50 transition-opacity group-hover:opacity-80"
                   duration={1.5}
-                  delay={0.15 * i}
+                  delay={0}
                 />
                 <span className="text-xs font-bold uppercase tracking-wider text-gray-900">
                   {cat.name}
@@ -251,7 +251,7 @@ export default function V2Page() {
                     height={64}
                     className="opacity-60 [&_.str0]:!stroke-blue-400/70"
                     duration={1.5}
-                    delay={0.3 + 0.15 * i}
+                    delay={0}
                   />
                 </div>
                 <h3 className="mb-3 text-lg font-semibold">{pillar.title}</h3>
@@ -318,7 +318,7 @@ export default function V2Page() {
                   height={120}
                   className="opacity-40"
                   duration={2}
-                  delay={0.5}
+                  delay={0}
                 />
               </div>
             </motion.div>

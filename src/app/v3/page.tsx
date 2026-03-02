@@ -124,7 +124,7 @@ export default function V3Page() {
                 height={400}
                 className="opacity-60"
                 duration={2.5}
-                delay={0.5}
+                delay={0}
               />
             </motion.div>
           </div>
@@ -233,7 +233,7 @@ export default function V3Page() {
                     width={120}
                     height={120}
                     duration={2}
-                    delay={0.15 * i}
+                    delay={0}
                     strokeScale={cat.strokeScale}
                   />
                 </div>
@@ -300,7 +300,7 @@ export default function V3Page() {
                 height={100}
                 className="mt-6 opacity-30"
                 duration={2}
-                delay={0.5}
+                delay={0}
               />
             </motion.div>
           </div>

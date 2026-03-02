@@ -254,7 +254,7 @@ export default function V5Page() {
                     height={160}
                     className="[&_path]:!stroke-blue-500 [&_line]:!stroke-blue-500 [&_polyline]:!stroke-blue-500 [&_circle]:!stroke-blue-500 [&_ellipse]:!stroke-blue-500 [&_rect]:!stroke-blue-500"
                     duration={2}
-                    delay={0.15 * i}
+                    delay={0}
                     strokeScale={cat.strokeScale}
                   />
                 </div>
@@ -387,7 +387,7 @@ export default function V5Page() {
                 height={360}
                 className="[&_path]:!stroke-blue-500 [&_line]:!stroke-blue-500 [&_polyline]:!stroke-blue-500 [&_circle]:!stroke-blue-500 [&_ellipse]:!stroke-blue-500 [&_rect]:!stroke-blue-500 opacity-40"
                 duration={2.5}
-                delay={0.3}
+                delay={0}
                 strokeScale={0.5}
               />
             </motion.div>
@@ -463,7 +463,7 @@ export default function V5Page() {
                 height={100}
                 className="mt-6 opacity-20 invert"
                 duration={2}
-                delay={0.5}
+                delay={0}
               />
             </motion.div>
           </div>

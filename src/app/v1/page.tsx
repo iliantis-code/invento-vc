@@ -70,7 +70,7 @@ export default function V1Page() {
               height={480}
               className="opacity-80"
               duration={2.5}
-              delay={0.3}
+              delay={0}
             />
           </div>
         </div>
@@ -105,7 +105,7 @@ export default function V1Page() {
                     height={56}
                     className="opacity-60 transition-opacity group-hover:opacity-100"
                     duration={1.5}
-                    delay={0.2 * i}
+                    delay={0}
                   />
                   <span
                     className={`text-xs font-bold tracking-wider ${
