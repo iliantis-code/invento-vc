@@ -35,7 +35,7 @@ export default function V1Page() {
     <>
       {/* Hero */}
       <section className="relative pt-24">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-8 pt-20 pb-20 md:px-20 lg:pt-32">
+        <div className="mx-auto flex max-w-[1440px] items-center justify-center gap-16 px-8 pt-20 pb-20 md:px-20 lg:gap-24 lg:pt-32">
           <motion.div
             className="max-w-2xl"
             initial={{ opacity: 0, y: 30 }}
