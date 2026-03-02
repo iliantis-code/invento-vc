@@ -310,7 +310,7 @@ export default function V5Page() {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-3xl font-bold tracking-tight text-white md:text-4xl">
-              Built for deeptech founders.
+              Built for deeptech founders<span className="text-blue-500">.</span>
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-lg text-gray-400">
               Everything you need from a venture partner — focus, speed, and
@@ -343,27 +343,55 @@ export default function V5Page() {
         </div>
       </section>
 
-      {/* Central illustration */}
+      {/* Central illustration + text */}
       <section className="border-t border-white/10">
-        <div className="mx-auto max-w-6xl px-6 py-16">
-          <motion.div
-            className="flex justify-center"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <AnimatedIllustration
-              src="/illustrations/burza mozgow.svg"
-              alt="Innovation"
-              width={360}
-              height={360}
-              className="[&_path]:!stroke-blue-500 [&_line]:!stroke-blue-500 [&_polyline]:!stroke-blue-500 [&_circle]:!stroke-blue-500 [&_ellipse]:!stroke-blue-500 [&_rect]:!stroke-blue-500 opacity-40"
-              duration={2.5}
-              delay={0.3}
-              strokeScale={0.5}
-            />
-          </motion.div>
+        <div className="mx-auto max-w-6xl px-6 py-20">
+          <div className="flex flex-col items-center gap-12 md:flex-row md:items-center md:gap-16">
+            <motion.div
+              className="flex-1 md:max-w-lg"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-3xl font-bold tracking-tight text-white md:text-4xl">
+                Where conviction meets capital<span className="text-blue-500">.</span>
+              </h2>
+              <p className="mt-6 text-lg leading-relaxed text-gray-400">
+                We back founders at the earliest stages — when the technology is
+                unproven, the market is uncertain, and the opportunity is greatest.
+                Our deep sector expertise and operational experience help transform
+                breakthrough ideas into category-defining companies.
+              </p>
+              <div className="mt-8 flex items-center gap-8">
+                {stats.map((s, i) => (
+                  <div key={s.label}>
+                    <span className="text-3xl font-bold text-blue-400">{s.value}</span>
+                    <p className="mt-1 text-xs uppercase tracking-wider text-gray-500">{s.label}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="flex-shrink-0"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <AnimatedIllustration
+                src="/illustrations/burza mozgow.svg"
+                alt="Innovation"
+                width={360}
+                height={360}
+                className="[&_path]:!stroke-blue-500 [&_line]:!stroke-blue-500 [&_polyline]:!stroke-blue-500 [&_circle]:!stroke-blue-500 [&_ellipse]:!stroke-blue-500 [&_rect]:!stroke-blue-500 opacity-40"
+                duration={2.5}
+                delay={0.3}
+                strokeScale={0.5}
+              />
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -378,7 +406,7 @@ export default function V5Page() {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-3xl font-bold tracking-tight text-white md:text-4xl">
-              The team.
+              The team<span className="text-blue-500">.</span>
             </h2>
           </motion.div>
 
@@ -453,7 +481,7 @@ export default function V5Page() {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-3xl font-bold tracking-tight text-white md:text-4xl">
-              Exceptional founders, exceptional companies.
+              Exceptional founders, exceptional companies<span className="text-blue-500">.</span>
             </h2>
           </motion.div>
 
@@ -492,7 +520,7 @@ export default function V5Page() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            Building something exceptional?
+            Building something exceptional<span className="text-blue-500">?</span>
           </motion.h2>
           <p className="mx-auto mt-4 max-w-md text-lg text-gray-400">
             We&apos;re looking for ambitious founders with breakthrough

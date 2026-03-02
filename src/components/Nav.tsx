@@ -15,7 +15,7 @@ export function Nav() {
   const pathname = usePathname();
 
   // Ukryj globalny Nav na wariantach które mają własny
-  if (pathname.startsWith("/v2") || pathname.startsWith("/v3") || pathname.startsWith("/v4") || pathname.startsWith("/v5")) {
+  if (pathname === "/" || pathname.startsWith("/v2") || pathname.startsWith("/v3") || pathname.startsWith("/v4") || pathname.startsWith("/v5")) {
     return null;
   }
 

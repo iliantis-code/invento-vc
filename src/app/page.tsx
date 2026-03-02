@@ -35,13 +35,15 @@ const variants = [
 
 export default function HomePage() {
   return (
-    <section className="min-h-screen bg-white pt-24">
-      <div className="mx-auto max-w-6xl px-6 py-16">
-        <h1 className="font-serif text-5xl italic text-navy md:text-6xl">
-          Invento.vc
+    <section className="min-h-screen bg-white">
+      <div className="mx-auto max-w-6xl px-6 pt-24 pb-16">
+        <h1 className="text-3xl font-bold tracking-tight text-gray-900 md:text-4xl">
+          Propozycje designu strony
         </h1>
-        <p className="mt-4 max-w-xl text-lg text-navy-muted">
-          Wybierz wariant designu strony
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-gray-500">
+          Cztery warianty wizualne — od klasycznego granatowego serifa, przez ciemny SaaS layout,
+          po ciepły kremowy i minimalistyczny dark mode. Każdy ma własną nawigację, kolorystykę
+          i sposób prezentacji portfolio. Kliknij w kartę, żeby zobaczyć pełną wersję.
         </p>
 
         <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
