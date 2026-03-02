@@ -6,9 +6,18 @@ import { ArrowRight, ArrowUpRight, MapPin, Envelope, LinkedinLogo, Target, Hands
 import { AnimatedIllustration } from "@/components/AnimatedIllustration";
 
 const companies = [
-  "Quantia", "CThings.co", "Safebox24", "Jivr", "Zjedz.my",
-  "Waven", "Planet Heroes", "My Owl", "Omniscopy", "Gridaly",
-  "Panamint", "ResQuant", "Redigo Carbon",
+  { name: "Quantia", logo: "/logos/quantia.png" },
+  { name: "CThings.co", logo: "/logos/cthingsco.jpg" },
+  { name: "Safebox24", logo: "/logos/safebox24.jpg" },
+  { name: "Jivr", logo: "/logos/jivr.jpg" },
+  { name: "Zjedz.my", logo: "/logos/zjedzmy.jpg" },
+  { name: "Waven", logo: "/logos/waven.jpg" },
+  { name: "Planet Heroes", logo: "/logos/planet-heroes.jpg" },
+  { name: "Omniscopy", logo: "/logos/omniscopy.jpg" },
+  { name: "Gridaly", logo: "/logos/gridaly.jpg" },
+  { name: "Panamint", logo: "/logos/panamint.jpg" },
+  { name: "ResQuant", logo: "/logos/resquant.jpg" },
+  { name: "Redigo Carbon", logo: "/logos/redigo-carbon.png" },
 ];
 
 const features = [
@@ -27,11 +36,11 @@ const stats = [
 ];
 
 const sectors = [
-  { name: "FinTech", icon: "/illustrations/fintech.svg", opacity: 0.7 },
-  { name: "MedTech", icon: "/illustrations/reka smartphone.svg", opacity: 0.4 },
-  { name: "Industry 4.0", icon: "/illustrations/tech industry.svg", opacity: 0.45 },
-  { name: "CleanTech", icon: "/illustrations/clean tech.svg", opacity: 0.7 },
-  { name: "Dual Use", icon: "/illustrations/dron.svg", opacity: 0.6 },
+  { name: "FinTech", icon: "/illustrations/fintech.svg", opacity: 0.7, strokeScale: 1.0 },
+  { name: "MedTech", icon: "/illustrations/reka smartphone.svg", opacity: 0.4, strokeScale: 1.0 },
+  { name: "Industry 4.0", icon: "/illustrations/tech industry.svg", opacity: 0.45, strokeScale: 1.0 },
+  { name: "CleanTech", icon: "/illustrations/clean tech.svg", opacity: 0.7, strokeScale: 1.0 },
+  { name: "Dual Use", icon: "/illustrations/dron.svg", opacity: 0.6, strokeScale: 1.0 },
 ];
 
 const team = [
@@ -43,7 +52,7 @@ export default function V3Page() {
   return (
     <div className="min-h-screen font-sans text-gray-900 antialiased" style={{ backgroundColor: "#faf9f7" }}>
       {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-gray-200/60 bg-[#faf9f7]/80 backdrop-blur-md">
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[#e8e4de] bg-[#faf9f7]/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
           <Link href="/v3" className="text-3xl font-bold tracking-tight">
             invento<span className="text-blue-600">.</span>
@@ -65,7 +74,7 @@ export default function V3Page() {
 
       {/* Hero */}
       <section className="pt-20">
-        <div className="mx-auto max-w-6xl px-6 pb-16 pt-16 md:pt-24">
+        <div className="mx-auto max-w-6xl px-6 pb-24 pt-16 md:pt-24">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -125,22 +134,21 @@ export default function V3Page() {
       {/* Logo band */}
       <section className="border-y border-[#e8e4de] bg-[#f5f3ef]">
         <div className="mx-auto max-w-6xl px-6 py-10">
-          <p className="mb-6 text-center text-xs font-semibold uppercase tracking-widest text-gray-900">
+          <p className="mb-8 text-center text-xs font-semibold uppercase tracking-widest text-gray-900">
             Powering exceptional founders across deeptech & digital.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-            {companies.map((c, i) => (
-              <motion.span
-                key={c}
-                className="text-[13px] font-medium text-gray-400 transition-colors hover:text-gray-700"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: 0.03 * i }}
-              >
-                {c}
-              </motion.span>
-            ))}
+          <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+            <div className="flex w-max items-center gap-16 animate-[marquee_120s_linear_infinite]">
+              {[...companies, ...companies].map((c, i) => (
+                <span key={`${c.name}-${i}`} className="shrink-0 opacity-50">
+                  <img
+                    src={c.logo}
+                    alt={c.name}
+                    className="h-14 object-contain grayscale mix-blend-darken"
+                  />
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -226,6 +234,7 @@ export default function V3Page() {
                     height={120}
                     duration={2}
                     delay={0.15 * i}
+                    strokeScale={cat.strokeScale}
                   />
                 </div>
                 <span className="text-sm font-bold uppercase tracking-wider text-gray-700">
@@ -316,14 +325,14 @@ export default function V3Page() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-200/60 bg-[#faf9f7]">
+      <footer className="bg-gray-950">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-          <span className="text-3xl font-bold">invento<span className="text-blue-600">.</span></span>
+          <span className="text-3xl font-bold text-white">invento<span className="text-blue-600">.</span></span>
           <div className="flex items-center gap-4">
-            <a href="mailto:office@invento.vc" className="text-gray-300 transition-colors hover:text-gray-500">
+            <a href="mailto:office@invento.vc" className="text-gray-500 transition-colors hover:text-gray-300">
               <Envelope size={18} />
             </a>
-            <a href="https://linkedin.com" className="text-gray-300 transition-colors hover:text-gray-500">
+            <a href="https://linkedin.com" className="text-gray-500 transition-colors hover:text-gray-300">
               <LinkedinLogo size={18} />
             </a>
           </div>

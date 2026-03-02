@@ -2,12 +2,25 @@
 
 ## Aktualny stan
 - **Branch**: `main`
-- **Faza**: Dopracowywanie wariantów — logotypy spółek, nawigacja, design V5 (dark) jako główny kierunek
-- V5 mocno rozbudowany: marquee logotypów, niebieskie SVG sektorów (blue-500), niebieska kropka w nagłówkach
-- Nierozwiązany problem: stroke-width SVG dla MedTech/Industry 4.0 — `strokeScale` prop działa ale wymaga dalszego tuningu
+- **Faza**: Dopracowywanie wariantów V3 i V4 (dawne V5). Bug stroke-width naprawiony. V5 przemianowane na V4.
+- V4: features grid z numerami (01-06), mózg w blue-500, sektory strokeScale 1.0
+- V3: logotypy marquee, czarny footer, naprawiony globalny Nav/Footer overlap
 
 ## Ostatnie zmiany
 <!-- /wrap dopisuje nowe wpisy tutaj, najnowsze na górze -->
+
+### 2026-03-02 — Fix stroke-width, V5→V4, dopracowanie V3/V4
+- **FIX stroke-width SVG**: Root cause — `gsap.set(paths, { attr: { "stroke-width": ... } })` ustawia SVG presentation attribute (najniższa specificity), przegrywa z CSS klasą `.str0 { stroke-width: X }` w `<style>` bloku SVG. Fix: zamiana na `gsap.set(paths, { strokeWidth: ... })` — inline CSS style (najwyższa specificity). Wszystkie sektory teraz strokeScale: 1.0
+- **V5 → V4**: routing zmieniony z `/v5` na `/v4`, katalog `app/v5/` przeniesiony do `app/v4/`
+- **V4 features grid**: Phosphor ikony zamienione na numery 01-06 (Inter bold text-4xl, blue-400/60)
+- **V4 mózg (burza mozgow)**: zmieniony na blue-500 stroke, strokeScale 0.5
+- **V3 naprawiony**: globalny Nav/Footer ukryte (dodane `/v3` `/v4` do warunków w Nav.tsx/Footer.tsx), nav border `border-[#e8e4de]`, hero padding zwiększony (pt-16 md:pt-24, pb-24)
+- **V3 sektory**: dodany strokeScale 1.0 — normalizacja grubości jak V4
+- **V3 logotypy**: tekstowe nazwy → marquee z obrazkami (h-14, grayscale, mix-blend-darken, opacity-50 na wrapperze)
+- **V3 footer**: zmieniony na czarny (gray-950)
+- **Showroom**: tło białe (było kremowe), V5→V4 w nazwie
+- Decyzja: CHOSE `strokeWidth:` (CSS inline) zamiast `attr: { "stroke-width": }` (SVG attribute) BECAUSE inline style ma najwyższą CSS specificity i zawsze wygrywa nad class-based rules (REJECTED czyszczenie `<style>` textContent BECAUSE nie działa niezawodnie, CDATA/browser caching issues)
+- Decyzja: CHOSE numery 01-06 w features grid BECAUSE pasują do ręcznych ilustracji lepiej niż Phosphor ikony (REJECTED Phosphor ikony BECAUSE zbyt generyczne, nie pasują do hand-drawn stylu)
 
 ### 2026-03-02 — Logotypy spółek, nawigacja, design V5
 - **Logotypy spółek pobrane** z invento.vc (12 z 13 — My Owl nie znaleziony, usunięty z listy). Zapisane w `public/logos/`. Podmienione tekstowe nazwy na obrazki w V1, V2, V5
@@ -86,6 +99,8 @@
 | 2026-03-01 | Warianty jako podstrony /v2 /v3 | Łatwiejsze porównanie w przeglądarce, jeden dev server | Osobne branche |
 | 2026-03-01 | Ręczne opacity per SVG w sektorach | Auto-kalkulacja (density) nie odzwierciedla wizualnej wagi | Auto stroke-opacity |
 | 2026-03-01 | Stroke-width skalowany do viewBox | 0.35% viewBox width — normalizuje grubość niezależnie od canvas size | Stała wartość strokeWidth:7 |
+| 2026-03-02 | GSAP `strokeWidth:` (CSS inline) zamiast `attr:` | Inline style wygrywa specificity nad CSS class rules w SVG `<style>` | `attr: { "stroke-width": }` (przegrywa z CSS) |
+| 2026-03-02 | Numery 01-06 w features V4 | Pasują do hand-drawn stylu | Phosphor ikony (zbyt generyczne) |
 
 ## Co nie zadziałało
 - **Figma MCP** — brak fontFamily, kruchy layout, tool limitations
@@ -101,9 +116,9 @@
 - [OPEN] Timing animacji SVG — do dopracowania po testach w przeglądarce
 
 ## Backlog
-- [ ] **FIX**: stroke-width MedTech/Industry 4.0 w V5 — `strokeScale` prop nie działa, SVG inline style nadpisuje
-- [ ] Dalsze dopracowanie V5 i V1 (Maciej testuje na żywo)
-- [ ] Wybrać finalny wariant designu (V1/V2/V3/V5) i dopracować
+- [x] ~~**FIX**: stroke-width MedTech/Industry 4.0~~ — naprawione (inline CSS style zamiast attr)
+- [ ] Dalsze dopracowanie V3 i V4 (Maciej testuje na żywo)
+- [ ] Wybrać finalny wariant designu (V1/V2/V3/V4) i dopracować
 - [ ] Przetestować animacje GSAP, dopracować timing/stagger
 - [ ] Responsywność mobile
 - [ ] Metadata per page (SEO)

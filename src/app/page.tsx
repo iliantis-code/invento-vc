@@ -25,9 +25,9 @@ const variants = [
     accent: "#121F45",
   },
   {
-    name: "V5 — Dark Cruip",
+    name: "V4 — Dark Cruip",
     description: "Ciemny (gray-950), styl Cruip Simple, browser mockup, sector pills",
-    href: "/v5",
+    href: "/v4",
     bg: "#030712",
     accent: "#3b82f6",
   },
@@ -35,7 +35,7 @@ const variants = [
 
 export default function HomePage() {
   return (
-    <section className="min-h-screen bg-[#f5f5f0] pt-24">
+    <section className="min-h-screen bg-white pt-24">
       <div className="mx-auto max-w-6xl px-6 py-16">
         <h1 className="font-serif text-5xl italic text-navy md:text-6xl">
           Invento.vc

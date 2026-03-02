@@ -73,11 +73,12 @@ export function AnimatedIllustration({
     });
 
     gsap.set(el, { opacity: 1 });
-    gsap.set(paths, { attr: { "stroke-width": targetStroke } });
+    // Use CSS inline style (not attr) — inline style beats class-based CSS rules in specificity
+    gsap.set(paths, { strokeWidth: targetStroke });
 
     gsap.from(paths, {
       drawSVG: 0,
-      attr: { "stroke-width": targetStroke * 0.07 },
+      strokeWidth: targetStroke * 0.07,
       stagger,
       duration,
       delay,

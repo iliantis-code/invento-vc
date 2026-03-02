@@ -7,12 +7,6 @@ import {
   MapPin,
   Envelope,
   LinkedinLogo,
-  Target,
-  Handshake,
-  ShieldCheck,
-  Lightning,
-  ChartLineUp,
-  Cpu,
 } from "@phosphor-icons/react";
 import { AnimatedIllustration } from "@/components/AnimatedIllustration";
 
@@ -33,43 +27,37 @@ const companies = [
 
 const features = [
   {
-    icon: Target,
     title: "Early-stage focus",
     desc: "Seed and pre-Series A investments in deeptech and digital ventures across Europe.",
   },
   {
-    icon: Lightning,
     title: "Operational support",
     desc: "Hands-on help with strategy, hiring, go-to-market and technology decisions.",
   },
   {
-    icon: Handshake,
     title: "Global networks",
     desc: "Connections across Europe and the US to accelerate growth and open new markets.",
   },
   {
-    icon: ShieldCheck,
     title: "Founder-first",
     desc: "We protect your vision and align incentives for the long term.",
   },
   {
-    icon: ChartLineUp,
     title: "Milestone-driven",
     desc: "Structured support through concrete phases of company building.",
   },
   {
-    icon: Cpu,
     title: "Follow-on ready",
     desc: "Reserved capital for follow-on rounds in best-performing companies.",
   },
 ];
 
 const sectors = [
-  { name: "FinTech", icon: "/illustrations/fintech.svg", opacity: 0.85, strokeScale: 0.35 },
-  { name: "MedTech", icon: "/illustrations/reka smartphone.svg", opacity: 0.5, strokeScale: 0.05 },
-  { name: "Industry 4.0", icon: "/illustrations/tech industry.svg", opacity: 0.55, strokeScale: 0.03 },
-  { name: "CleanTech", icon: "/illustrations/clean tech.svg", opacity: 0.85, strokeScale: 0.35 },
-  { name: "Dual Use", icon: "/illustrations/dron.svg", opacity: 0.75, strokeScale: 0.35 },
+  { name: "FinTech", icon: "/illustrations/fintech.svg", opacity: 0.85, strokeScale: 1.0 },
+  { name: "MedTech", icon: "/illustrations/reka smartphone.svg", opacity: 0.5, strokeScale: 1.0 },
+  { name: "Industry 4.0", icon: "/illustrations/tech industry.svg", opacity: 0.55, strokeScale: 1.0 },
+  { name: "CleanTech", icon: "/illustrations/clean tech.svg", opacity: 0.85, strokeScale: 1.0 },
+  { name: "Dual Use", icon: "/illustrations/dron.svg", opacity: 0.75, strokeScale: 1.0 },
 ];
 
 const team = [
@@ -115,7 +103,7 @@ export default function V5Page() {
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-gray-950/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <Link href="/v5" className="text-2xl font-bold tracking-tight">
+          <Link href="/v4" className="text-2xl font-bold tracking-tight">
             invento<span className="text-blue-500">.</span>
           </Link>
           <div className="hidden items-center gap-8 text-sm text-gray-400 md:flex">
@@ -340,9 +328,9 @@ export default function V5Page() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.35, delay: 0.06 * i }}
               >
-                <div className="mb-4 inline-flex rounded-xl bg-blue-500/10 p-2.5">
-                  <f.icon size={24} weight="regular" className="text-blue-400" />
-                </div>
+                <span className="mb-4 block text-4xl font-bold tracking-tight text-blue-400/60">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
                 <h3 className="text-base font-semibold text-gray-100">
                   {f.title}
                 </h3>
@@ -370,9 +358,10 @@ export default function V5Page() {
               alt="Innovation"
               width={360}
               height={360}
-              className="opacity-40 invert"
+              className="[&_path]:!stroke-blue-500 [&_line]:!stroke-blue-500 [&_polyline]:!stroke-blue-500 [&_circle]:!stroke-blue-500 [&_ellipse]:!stroke-blue-500 [&_rect]:!stroke-blue-500 opacity-40"
               duration={2.5}
               delay={0.3}
+              strokeScale={0.5}
             />
           </motion.div>
         </div>
