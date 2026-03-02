@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { AnimatedIllustration } from "@/components/AnimatedIllustration";
@@ -35,7 +34,7 @@ export default function V1Page() {
     <>
       {/* Hero */}
       <section className="relative pt-24">
-        <div className="mx-auto flex max-w-[1440px] items-center justify-center gap-16 px-8 pt-20 pb-20 md:px-20 lg:gap-24 lg:pt-32">
+        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-8 pt-20 pb-20 md:px-20 lg:pt-32">
           <motion.div
             className="max-w-2xl"
             initial={{ opacity: 0, y: 30 }}
@@ -43,9 +42,7 @@ export default function V1Page() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <h1 className="font-serif text-6xl leading-[1.1] tracking-tight text-navy italic md:text-7xl lg:text-[5.5rem]">
-              Hands-on
-              <br />
-              capital
+              Hands-on capital
               <br />
               powering
               <br />
@@ -66,7 +63,7 @@ export default function V1Page() {
             </div>
           </motion.div>
 
-          <div className="hidden lg:block">
+          <div className="hidden lg:block mr-8">
             <AnimatedIllustration
               src="/illustrations/burza mozgow.svg"
               alt="Innovation illustration"

@@ -17,6 +17,8 @@ interface AnimatedIllustrationProps {
   duration?: number;
   /** Starting stroke width (animates to original) */
   strokeFrom?: number;
+  /** Stagger between paths in seconds (default 0.08) */
+  stagger?: number;
 }
 
 export function AnimatedIllustration({
@@ -28,6 +30,7 @@ export function AnimatedIllustration({
   delay = 0,
   duration = 2,
   strokeFrom = 0.5,
+  stagger = 0.08,
 }: AnimatedIllustrationProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgContent, setSvgContent] = useState<string | null>(null);
@@ -73,7 +76,7 @@ export function AnimatedIllustration({
     gsap.from(paths, {
       drawSVG: 0,
       attr: { "stroke-width": targetStroke * 0.07 },
-      stagger: 0.08,
+      stagger,
       duration,
       delay,
       ease: "power2.inOut",
@@ -89,7 +92,7 @@ export function AnimatedIllustration({
         if (t.trigger === el) t.kill();
       });
     };
-  }, [svgContent, delay, duration, strokeFrom]);
+  }, [svgContent, delay, duration, strokeFrom, stagger]);
 
   return (
     <div

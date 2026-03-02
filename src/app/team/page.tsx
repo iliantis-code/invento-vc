@@ -5,10 +5,10 @@ import { LinkedinLogo, MapPin } from "@phosphor-icons/react/dist/ssr";
 import { AnimatedIllustration } from "@/components/AnimatedIllustration";
 import { motion } from "motion/react";
 
-const locations = [
-  { city: "Katowice", icon: "/illustrations/Katowice.svg" },
-  { city: "Warszawa", icon: "/illustrations/Warszawa.svg" },
-  { city: "USA", icon: "/illustrations/NY.svg" },
+const locations: { city: string; icon: string; width: number; height: number; offsetUp?: boolean; speed: number }[] = [
+  { city: "Katowice", icon: "/illustrations/Katowice.svg", width: 300, height: 90, speed: 3 },
+  { city: "Warszawa", icon: "/illustrations/Warszawa.svg", width: 200, height: 300, speed: 0.8 },
+  { city: "USA", icon: "/illustrations/NY.svg", width: 120, height: 290, offsetUp: true, speed: 0.01 },
 ];
 
 const team = [
@@ -57,8 +57,9 @@ export default function TeamPage() {
                 width={520}
                 height={280}
                 className="opacity-70"
-                duration={3}
-                delay={0.3}
+                duration={0.8}
+                delay={0.1}
+                stagger={0.02}
               />
             </div>
           </div>
@@ -70,16 +71,18 @@ export default function TeamPage() {
         <div className="mx-auto max-w-[1440px] px-8 py-20 md:px-20">
           <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
             {locations.map((loc, i) => (
-              <div key={loc.city} className="flex flex-col items-center gap-4">
-                <AnimatedIllustration
-                  src={loc.icon}
-                  alt={loc.city}
-                  width={120}
-                  height={120}
-                  className="opacity-60"
-                  duration={2}
-                  delay={0.3 * i}
-                />
+              <div key={loc.city} className="flex flex-col items-center justify-end gap-4">
+                <div className={`flex items-end justify-center${loc.offsetUp ? " relative -top-12" : ""}`}>
+                  <AnimatedIllustration
+                    src={loc.icon}
+                    alt={loc.city}
+                    width={loc.width}
+                    height={loc.height}
+                    className="opacity-60"
+                    duration={loc.speed}
+                    delay={0.3 * i}
+                  />
+                </div>
                 <motion.div
                   className="flex items-center gap-2"
                   initial={{ opacity: 0 }}

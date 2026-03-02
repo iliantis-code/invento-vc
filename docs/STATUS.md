@@ -2,12 +2,22 @@
 
 ## Aktualny stan
 - **Branch**: `main`
-- **Faza**: Eksploracja designu — 4 warianty strony (V1 `/v1`, V2 `/v2`, V3 `/v3`, V4 `/v4`), showroom na `/`
-- Strona publiczna na `invento-vc-iliantis-codes-projects.vercel.app`, SSO Protection wyłączone
-- Daga (klientka) ogląda warianty. Maciej chce dopracować V4 w kolejnej sesji
+- **Faza**: Eksploracja designu — 4 warianty strony (V1 `/v1`, V2 `/v2`, V3 `/v3`, V5 `/v5`), showroom na `/`
+- V4 (jasny Cruip) usunięty — został V5 (ciemny Cruip Simple). Strona publiczna na Vercel.
+- Trwa dopracowywanie: V1 hero layout, Team lokalizacje (rozmiary/pozycje SVG), animacje GSAP
 
 ## Ostatnie zmiany
 <!-- /wrap dopisuje nowe wpisy tutaj, najnowsze na górze -->
+
+### 2026-03-02 — V4→V5 redesign Cruip Simple + poprawki V1/Team
+- **V4 przerobiony** z ciemnego na jasny styl Cruip Simple (white bg, gray-900 buttons, indigo-600 accenty, browser mockup, sector pills, partner quote, portfolio highlights). Nowe sekcje: browser mockup, sector pills, partner quote blockquote, portfolio highlights cards
+- **V5 stworzony** jako ciemna wersja tego samego layoutu (gray-950, white buttons, blue-400 accenty, SVG z `invert`)
+- **V4 usunięty** (jasny) — Maciej wybrał ciemną wersję (V5)
+- **V1 hero**: "Hands-on capital" w jednej linii, mózg przesunięty `mr-8`, usunięty nieużywany import `Image`
+- **Team lokalizacje**: indywidualne rozmiary SVG per miasto (Katowice 260x90, Warszawa 160x220, USA 100x220), Statua Wolności przesunięta w górę (`-top-12`), indywidualne `speed` animacji (Katowice 3s, Warszawa 0.8s, USA 0.01s)
+- **AnimatedIllustration**: nowy prop `stagger` (domyślnie 0.08) — pozwala kontrolować rozłożenie animacji per instancję. Team 10 osób: stagger=0.02, duration=0.8
+- Decyzja: CHOSE ciemny Cruip (V5) BECAUSE Maciej usunął jasny V4, zostawił ciemny
+- Decyzja: CHOSE indywidualne rozmiary SVG lokalizacji BECAUSE viewBoxy drastycznie różne, jeden width/height nie normalizuje wyglądu
 
 ### 2026-03-01 — Showroom + V4 + normalizacja SVG stroke
 - Stworzono **showroom** na `/` z iframe-preview 4 wariantów (V1 przeniesione z `/` do `/v1`)
@@ -74,8 +84,8 @@
 - [OPEN] Timing animacji SVG — do dopracowania po testach w przeglądarce
 
 ## Backlog
-- [ ] Dopracować V4 (Maciej chce kontynuować w następnej sesji)
-- [ ] Wybrać finalny wariant designu (V1/V2/V3/V4) i dopracować
+- [ ] Dalsze dopracowanie V5 i V1 (Maciej testuje na żywo)
+- [ ] Wybrać finalny wariant designu (V1/V2/V3/V5) i dopracować
 - [ ] Przetestować animacje GSAP, dopracować timing/stagger
 - [ ] Responsywność mobile
 - [ ] Metadata per page (SEO)
