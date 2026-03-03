@@ -41,7 +41,13 @@ export function AnimatedIllustration({
   useEffect(() => {
     fetch(src)
       .then((res) => res.text())
-      .then((text) => setSvgContent(text));
+      .then((text) => {
+        // Remove stroke-width from CSS <style> blocks BEFORE injecting into DOM.
+        // This prevents any frame where the CSS rule could flash thick strokes
+        // before GSAP takes over stroke-width control.
+        const cleaned = text.replace(/stroke-width:[^;}"]+[;]?/g, "");
+        setSvgContent(cleaned);
+      });
   }, [src]);
 
   useEffect(() => {
@@ -62,13 +68,10 @@ export function AnimatedIllustration({
       targetStroke = vbWidth * (strokeScale / 100);
     }
 
-    // Remove inline stroke-width from SVG <style> blocks so GSAP can control it
-    const styleTags = svg.querySelectorAll("style");
-    styleTags.forEach((tag) => {
-      tag.textContent = (tag.textContent || "").replace(/stroke-width:[^;}"]+[;]?/g, "");
-    });
-    // Also clear inline style stroke-width on each element
+    // Remove stroke-width from SVG elements — both presentation attributes and inline styles.
+    // CSS <style> blocks are already cleaned in the fetch step (before DOM insertion).
     paths.forEach((p) => {
+      p.removeAttribute("stroke-width");
       (p as SVGElement).style.strokeWidth = "";
     });
 
@@ -87,6 +90,7 @@ export function AnimatedIllustration({
       duration,
       delay,
       ease: "power2.inOut",
+      overwrite: true,
       scrollTrigger: {
         trigger: el,
         start: "top 85%",

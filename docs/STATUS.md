@@ -1,13 +1,17 @@
 # Invento.vc — STATUS
 
 ## Aktualny stan
-- **Branch**: `main`
-- **Faza**: Dopracowywanie wariantów V3 i V4 (dawne V5). Bug stroke-width naprawiony. V5 przemianowane na V4.
-- V4: features grid z numerami (01-06), mózg w blue-500, sektory strokeScale 1.0
-- V3: logotypy marquee, czarny footer, naprawiony globalny Nav/Footer overlap
+- **Branch**: `main` (1 commit ahead of origin — nie pushować bez zgody Macieja)
+- **Faza**: Pauza. Warianty V1-V4 gotowe do przeglądu. Bug stroke-width mózgu SVG naprawiony (pre-clean HTML + removeAttribute + overwrite). Do weryfikacji wizualnej przy powrocie.
+- Projekt wstrzymany na kilka dni, Maciej wróci do niego później
 
 ## Ostatnie zmiany
 <!-- /wrap dopisuje nowe wpisy tutaj, najnowsze na górze -->
+
+### 2026-03-03 — Fix stroke-width mózgu SVG (pre-clean approach)
+- **FIX stroke-width puchnięcie**: Root cause — `stroke-width:14.87` w CSS `<style>` bloku SVG było usuwane dopiero w useEffect (po renderze DOM), co dawało okno czasowe na flash/re-apply. Fix 3-warstwowy: (1) usuwanie `stroke-width` z HTML stringa SVG PRZED `dangerouslySetInnerHTML` (w fetch step), (2) `removeAttribute("stroke-width")` na elementach SVG, (3) `overwrite: true` w GSAP `.to()` zapobiega akumulacji tweenów
+- Decyzja: CHOSE pre-clean SVG HTML string (regex w fetch) BECAUSE eliminuje CSS rule zanim trafi do DOM — zero okna na flash (REJECTED modyfikacja `<style>` textContent w useEffect BECAUSE DOM już wyrenderowany, CSS zdążyło zaaplikować się)
+- Build przechodzi czysto, wymaga weryfikacji wizualnej w przeglądarce
 
 ### 2026-03-02 — Fix stroke-width, V5→V4, dopracowanie V3/V4
 - **FIX stroke-width SVG**: Root cause — `gsap.set(paths, { attr: { "stroke-width": ... } })` ustawia SVG presentation attribute (najniższa specificity), przegrywa z CSS klasą `.str0 { stroke-width: X }` w `<style>` bloku SVG. Fix: zamiana na `gsap.set(paths, { strokeWidth: ... })` — inline CSS style (najwyższa specificity). Wszystkie sektory teraz strokeScale: 1.0
@@ -101,6 +105,7 @@
 | 2026-03-01 | Stroke-width skalowany do viewBox | 0.35% viewBox width — normalizuje grubość niezależnie od canvas size | Stała wartość strokeWidth:7 |
 | 2026-03-02 | GSAP `strokeWidth:` (CSS inline) zamiast `attr:` | Inline style wygrywa specificity nad CSS class rules w SVG `<style>` | `attr: { "stroke-width": }` (przegrywa z CSS) |
 | 2026-03-02 | Numery 01-06 w features V4 | Pasują do hand-drawn stylu | Phosphor ikony (zbyt generyczne) |
+| 2026-03-03 | Pre-clean SVG HTML (regex w fetch) | Eliminuje CSS stroke-width zanim trafi do DOM | Modyfikacja `<style>` textContent w useEffect (za późno) |
 
 ## Co nie zadziałało
 - **Figma MCP** — brak fontFamily, kruchy layout, tool limitations
@@ -108,6 +113,7 @@
 - **git push** do iliantis-code — 403 (credentials mismatch). **NAPRAWIONE** przez Admina: per-repo credential helper (board #109). Normalny `git -c http.proxyAuthMethod=basic push` działa.
 - **Vercel MCP ssoProtection** — `updateproject` z `ssoProtection: {deploymentType: "none"}` i inne warianty zwracają BAD_REQUEST. Trzeba wyłączyć ręcznie w dashboard.
 - **Auto stroke-opacity normalizacja** — obliczanie density (paths/sqrt(area)) nie daje wizualnie spójnych wyników, bo waga zależy też od długości path, złożoności, pustych przestrzeni w SVG
+- **Modyfikacja `<style>` textContent w useEffect** — usuwanie `stroke-width` z CSS po renderze DOM daje okno czasowe gdzie CSS rule się aplikuje. **NAPRAWIONE**: pre-clean HTML stringa przed `dangerouslySetInnerHTML`
 
 ## Otwarte pytania
 - [OPEN] Responsywność mobile — nie testowane jeszcze
