@@ -164,7 +164,7 @@ export default function V5Page() {
                 <img
                   src={s.image}
                   alt={s.value}
-                  className="h-40 object-contain"
+                  className="h-64 object-contain"
                 />
                 <div className="mt-4 text-3xl font-bold tracking-tight text-violet-900">{s.value}</div>
                 <div className="mt-1 text-sm font-medium text-pink-400">{s.label}</div>
