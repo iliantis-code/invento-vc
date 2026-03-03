@@ -252,7 +252,7 @@ export default function V5Page() {
             {team.map((p, i) => (
               <motion.div
                 key={p.name}
-                className="group overflow-hidden rounded-2xl bg-pink-100"
+                className="group overflow-hidden rounded-2xl bg-pink-100 max-w-xs"
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
