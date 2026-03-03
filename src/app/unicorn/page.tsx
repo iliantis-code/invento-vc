@@ -124,7 +124,13 @@ export default function V5Page() {
       </section>
 
       {/* Logo band */}
-      <section className="border-y border-pink-200 bg-pink-100">
+      <section
+        className="border-y border-pink-200 animate-[gradientShift_8s_ease_infinite]"
+        style={{
+          backgroundSize: "300% 300%",
+          backgroundImage: "linear-gradient(135deg, #fce7f3 0%, #f5d0fe 20%, #fdf2f8 40%, #ddd6fe 60%, #fbcfe8 80%, #f5d0fe 100%)",
+        }}
+      >
         <div className="mx-auto max-w-6xl px-6 py-10">
           <p className="mb-2 text-center text-lg font-bold text-violet-900">
             Powering exceptional founders across deeptech & digital.
