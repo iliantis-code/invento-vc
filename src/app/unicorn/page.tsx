@@ -139,7 +139,7 @@ export default function V5Page() {
                   <img
                     src={c.logo}
                     alt={c.name}
-                    className="h-14 object-contain grayscale mix-blend-darken"
+                    className="h-28 object-contain grayscale mix-blend-darken"
                   />
                 </span>
               ))}
