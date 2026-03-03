@@ -15,16 +15,16 @@ const categories = [
 
 const companies = [
   { name: "Quantia", logo: "/logos/quantia.png" },
-  { name: "CThings.co", logo: "/logos/cthingsco.jpg" },
-  { name: "Safebox24", logo: "/logos/safebox24.jpg" },
-  { name: "Jivr", logo: "/logos/jivr.jpg" },
-  { name: "Zjedz.my", logo: "/logos/zjedzmy.jpg" },
-  { name: "Waven", logo: "/logos/waven.jpg" },
-  { name: "Planet Heroes", logo: "/logos/planet-heroes.jpg" },
-  { name: "Omniscopy", logo: "/logos/omniscopy.jpg" },
-  { name: "Gridaly", logo: "/logos/gridaly.jpg" },
-  { name: "Panamint", logo: "/logos/panamint.jpg" },
-  { name: "ResQuant", logo: "/logos/resquant.jpg" },
+  { name: "CThings.co", logo: "/logos/cthingsco.png" },
+  { name: "Safebox24", logo: "/logos/safebox24.png" },
+  { name: "Jivr", logo: "/logos/jivr.png" },
+  { name: "Zjedz.my", logo: "/logos/zjedzmy.png" },
+  { name: "Waven", logo: "/logos/waven.png" },
+  { name: "Planet Heroes", logo: "/logos/planet-heroes.png" },
+  { name: "Omniscopy", logo: "/logos/omniscopy.png" },
+  { name: "Gridaly", logo: "/logos/gridaly.png" },
+  { name: "Panamint", logo: "/logos/panamint.png" },
+  { name: "ResQuant", logo: "/logos/resquant.png" },
   { name: "Redigo Carbon", logo: "/logos/redigo-carbon.png" },
 ];
 

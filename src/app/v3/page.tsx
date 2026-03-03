@@ -7,16 +7,16 @@ import { AnimatedIllustration } from "@/components/AnimatedIllustration";
 
 const companies = [
   { name: "Quantia", logo: "/logos/quantia.png" },
-  { name: "CThings.co", logo: "/logos/cthingsco.jpg" },
-  { name: "Safebox24", logo: "/logos/safebox24.jpg" },
-  { name: "Jivr", logo: "/logos/jivr.jpg" },
-  { name: "Zjedz.my", logo: "/logos/zjedzmy.jpg" },
-  { name: "Waven", logo: "/logos/waven.jpg" },
-  { name: "Planet Heroes", logo: "/logos/planet-heroes.jpg" },
-  { name: "Omniscopy", logo: "/logos/omniscopy.jpg" },
-  { name: "Gridaly", logo: "/logos/gridaly.jpg" },
-  { name: "Panamint", logo: "/logos/panamint.jpg" },
-  { name: "ResQuant", logo: "/logos/resquant.jpg" },
+  { name: "CThings.co", logo: "/logos/cthingsco.png" },
+  { name: "Safebox24", logo: "/logos/safebox24.png" },
+  { name: "Jivr", logo: "/logos/jivr.png" },
+  { name: "Zjedz.my", logo: "/logos/zjedzmy.png" },
+  { name: "Waven", logo: "/logos/waven.png" },
+  { name: "Planet Heroes", logo: "/logos/planet-heroes.png" },
+  { name: "Omniscopy", logo: "/logos/omniscopy.png" },
+  { name: "Gridaly", logo: "/logos/gridaly.png" },
+  { name: "Panamint", logo: "/logos/panamint.png" },
+  { name: "ResQuant", logo: "/logos/resquant.png" },
   { name: "Redigo Carbon", logo: "/logos/redigo-carbon.png" },
 ];
 
@@ -54,21 +54,18 @@ export default function V3Page() {
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[#e8e4de] bg-[#faf9f7]/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
-          <Link href="/v3" className="text-3xl font-bold tracking-tight">
-            invento<span className="text-blue-600">.</span>
+          <Link href="/v3" className="text-2xl font-bold tracking-tight">
+            invento<span className="text-[#8dacc7]">.</span>
           </Link>
-          <div className="hidden items-center gap-8 text-sm text-gray-600 md:flex">
+          <div className="hidden items-center gap-8 text-sm text-gray-500 md:flex">
             <a href="#portfolio" className="transition-colors hover:text-gray-900">Portfolio</a>
             <a href="#about" className="transition-colors hover:text-gray-900">About us</a>
             <a href="#team" className="transition-colors hover:text-gray-900">Team</a>
             <a href="#contact" className="transition-colors hover:text-gray-900">Contact</a>
           </div>
-          <div className="flex items-center gap-3">
-            <span className="text-xs text-gray-400">V3</span>
-            <Link href="/" className="rounded-lg border border-gray-200 px-3.5 py-1.5 text-sm text-gray-600 transition-colors hover:bg-[#f5f3ef]">
-              ← V1
-            </Link>
-          </div>
+          <a href="#contact" className="rounded-full bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800">
+            Get in touch
+          </a>
         </div>
       </nav>
 
@@ -134,8 +131,11 @@ export default function V3Page() {
       {/* Logo band */}
       <section className="border-y border-[#e8e4de] bg-[#f5f3ef]">
         <div className="mx-auto max-w-6xl px-6 py-10">
-          <p className="mb-8 text-center text-xs font-semibold uppercase tracking-widest text-gray-900">
+          <p className="mb-2 text-center text-lg font-bold text-gray-900">
             Powering exceptional founders across deeptech & digital.
+          </p>
+          <p className="mb-8 text-center text-base text-gray-400">
+            From early-stage ventures to category-defining companies.
           </p>
           <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
             <div className="flex w-max items-center gap-16 animate-[marquee_120s_linear_infinite]">

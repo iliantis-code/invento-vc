@@ -72,13 +72,17 @@ export function AnimatedIllustration({
       (p as SVGElement).style.strokeWidth = "";
     });
 
-    gsap.set(el, { opacity: 1 });
-    // Use CSS inline style (not attr) — inline style beats class-based CSS rules in specificity
-    gsap.set(paths, { strokeWidth: targetStroke });
+    // Kill any existing tweens on these paths (React strict mode double-render)
+    gsap.killTweensOf(paths);
 
-    gsap.from(paths, {
-      drawSVG: 0,
-      strokeWidth: targetStroke * 0.07,
+    gsap.set(el, { opacity: 1 });
+    // Set initial state: thin strokes, drawSVG at 0
+    gsap.set(paths, { strokeWidth: targetStroke * 0.07, drawSVG: 0 });
+
+    // Animate TO target state — ensures final stroke-width is always consistent
+    gsap.to(paths, {
+      drawSVG: "0% 100%",
+      strokeWidth: targetStroke,
       stagger,
       duration,
       delay,
@@ -94,6 +98,7 @@ export function AnimatedIllustration({
       ScrollTrigger.getAll().forEach((t) => {
         if (t.trigger === el) t.kill();
       });
+      gsap.killTweensOf(paths);
     };
   }, [svgContent, delay, duration, strokeFrom, stagger, strokeScale]);
 
