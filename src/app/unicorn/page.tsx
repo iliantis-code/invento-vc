@@ -30,9 +30,9 @@ const features = [
 ];
 
 const stats = [
-  { value: "13", label: "Portfolio companies" },
-  { value: "5", label: "Investment sectors" },
-  { value: "3", label: "Office locations" },
+  { value: "13", label: "Portfolio companies", image: "/illustrations/stat-13.png" },
+  { value: "5", label: "Investment sectors", image: "/illustrations/stat-5.png" },
+  { value: "3", label: "Office locations", image: "/illustrations/stat-3.png" },
 ];
 
 const sectors = [
@@ -151,18 +151,23 @@ export default function V5Page() {
       {/* Stats */}
       <section style={{ backgroundColor: "#fdf2f8" }}>
         <div className="mx-auto max-w-6xl px-6 py-20">
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-3">
             {stats.map((s, i) => (
               <motion.div
                 key={s.label}
-                className="rounded-2xl bg-pink-100 p-8"
+                className="flex flex-col items-center rounded-2xl bg-pink-100 px-6 py-8"
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: 0.1 * i }}
               >
-                <div className="text-5xl font-bold tracking-tight text-violet-900">{s.value}</div>
-                <div className="mt-2 text-sm font-medium text-pink-400">{s.label}</div>
+                <img
+                  src={s.image}
+                  alt={s.value}
+                  className="h-40 object-contain"
+                />
+                <div className="mt-4 text-3xl font-bold tracking-tight text-violet-900">{s.value}</div>
+                <div className="mt-1 text-sm font-medium text-pink-400">{s.label}</div>
               </motion.div>
             ))}
           </div>
