@@ -44,8 +44,7 @@ const sectors = [
 ];
 
 const team = [
-  { name: "Robert Bieleń", role: "Managing Partner", image: "/team/robert-bielen.jpg" },
-  { name: "Bartosz Zalewski", role: "Partner", image: "/team/bartosz-zalewski.jpg" },
+  { name: "Dagmara Strzębicka", role: "Managing Partner", image: "/team/dagmara-strzebicka.webp" },
 ];
 
 export default function V5Page() {
@@ -249,7 +248,7 @@ export default function V5Page() {
           <h2 className="mb-10 text-3xl font-bold tracking-tight text-violet-900 md:text-4xl">
             The team.
           </h2>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2">
             {team.map((p, i) => (
               <motion.div
                 key={p.name}
