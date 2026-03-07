@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-03-07
+
+### Dodane
+- Strona `/unicorn` — wariant pastelowo-rozowy (pink-50/violet-800) bazujacy na V3, ukryty przed showroomem
+- Ilustracja jednorozca PNG w hero (`public/illustrations/jednorozec.png`, 600x435, przezroczyste tlo)
+- Ilustracje cyferek 13/5/3 w stylu jednorozca (`public/illustrations/stat-{13,5,3}.png`) w sekcji Stats
+- Zdjecie Dagmary Strzebickiej w team (`public/team/dagmara-strzebicka.webp`)
+- Pastelowy gradient na logo band (niebieski, roz, lawenda)
+- Keyframe `gradientShift` w `globals.css`
+- Roadmapa projektu `doc/ROADMAP.md` (9 faz redesignu)
+- Transkrypcja rozmowy `doc/7_mar_o_18-34_pol.txt`
+
+### Zmienione
+- Nav.tsx i Footer.tsx — ukrywaja sie na `/unicorn` i `/grafiki`
+- Logotypy w marquee /unicorn powiekszone do h-28
+
 ## 2026-03-03
 
 ### Naprawione

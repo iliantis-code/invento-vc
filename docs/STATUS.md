@@ -1,12 +1,23 @@
 # Invento.vc — STATUS
 
 ## Aktualny stan
-- **Branch**: `main` (1 commit ahead of origin — nie pushować bez zgody Macieja)
-- **Faza**: Pauza. Warianty V1-V4 gotowe do przeglądu. Bug stroke-width mózgu SVG naprawiony (pre-clean HTML + removeAttribute + overwrite). Do weryfikacji wizualnej przy powrocie.
-- Projekt wstrzymany na kilka dni, Maciej wróci do niego później
+- **Branch**: `main` (up to date z origin)
+- **Faza**: Aktywny redesign. **V3 wybrane jako baza finalnej strony** (decyzja Dagmary 7.03). Roadmapa 9 faz w `doc/ROADMAP.md`. Agent w tle tworzy zakladke `/grafiki`.
+- Strona `/unicorn` (pastelowo-rozowa) na Vercel — ukryta demonstracja dla Dagmary
 
 ## Ostatnie zmiany
 <!-- /wrap dopisuje nowe wpisy tutaj, najnowsze na górze -->
+
+### 2026-03-07 — V5 Unicorn + roadmapa redesignu
+- **Strona /unicorn** — nowy wariant pastelowo-rozowy (pink-50, violet-800/900) bazujacy na V3. Ukryty przed showroomem, dostepny pod bezposrednim URL
+- **Jednorozec PNG** z `Inne Grafiki/`, usuniete biale tlo (Pillow), 600x435, hero zamiast SVG line-art
+- **Dagmara Strzebicka** — zdjecie pobrane ze scalab.pl, jedyna osoba w team /unicorn
+- **Cyferki jednorozcowe** — 13/5/3 wyciete z PNG Gemini, pionowe stats cards z ilustracja
+- **Logo band** — pastelowy gradient (niebieski, roz, lawenda), statyczny
+- **Transkrypcja rozmowy z Dagmara** — `doc/7_mar_o_18-34_pol.txt`, podsumowanie projektowe
+- **ROADMAP.md** — `doc/ROADMAP.md` z 9 fazami pracy
+- Decyzja: CHOSE V3 jako baze finalnej strony BECAUSE decyzja Dagmary z rozmowy 7.03 (REJECTED V1/V2/V4 jako baza)
+- Agent w tle: tworzenie zakladki `/grafiki` (galeria wszystkich ilustracji animowanych)
 
 ### 2026-03-03 — Fix stroke-width mózgu SVG (pre-clean approach)
 - **FIX stroke-width puchnięcie**: Root cause — `stroke-width:14.87` w CSS `<style>` bloku SVG było usuwane dopiero w useEffect (po renderze DOM), co dawało okno czasowe na flash/re-apply. Fix 3-warstwowy: (1) usuwanie `stroke-width` z HTML stringa SVG PRZED `dangerouslySetInnerHTML` (w fetch step), (2) `removeAttribute("stroke-width")` na elementach SVG, (3) `overwrite: true` w GSAP `.to()` zapobiega akumulacji tweenów
@@ -53,44 +64,6 @@
 - Decyzja: CHOSE ciemny Cruip (V5) BECAUSE Maciej usunął jasny V4, zostawił ciemny
 - Decyzja: CHOSE indywidualne rozmiary SVG lokalizacji BECAUSE viewBoxy drastycznie różne, jeden width/height nie normalizuje wyglądu
 
-### 2026-03-01 — Showroom + V4 + normalizacja SVG stroke
-- Stworzono **showroom** na `/` z iframe-preview 4 wariantów (V1 przeniesione z `/` do `/v1`)
-- Stworzono **V4** (`/v4`) — ciemny design inspirowany Cruip Simple: gray-950 bg, gradient blur blobs, blue-500/indigo-400 gradient text, features grid z gap-px, pill badge w hero
-- Naprawiono **nierówną grubość linii SVG** — `AnimatedIllustration` teraz skaluje `stroke-width` proporcjonalnie do viewBox (0.35% width). Usunięto CSS `!important` override z `globals.css`, oczyszczanie inline `stroke-width` z `<style>` bloków SVG
-- Ręczne **opacity per sektor** w V3 — MedTech 0.4, Industry 0.45, Dual Use 0.6, FinTech/CleanTech 0.7 (auto-kalkulacja dawała słabe wyniki)
-- Logo V3 powiększone do `text-3xl`
-- **SSO Protection wyłączone** na Vercel (było `all_except_custom_domains`, blokowało Dagę)
-- Decyzja: CHOSE ręczne opacity per SVG BECAUSE auto-kalkulacja (paths/sqrt(area)) nie odzwierciedla wizualnej wagi (REJECTED auto stroke-opacity BECAUSE zbyt wiele zmiennych wpływających na perceived weight)
-- Decyzja: CHOSE iframe preview w showroomie BECAUSE realistyczny podgląd bez screenshotów (REJECTED statyczne obrazki BECAUSE wymagałyby generowania i aktualizacji)
-- FAILED: Vercel MCP `updateproject` nie obsługuje formatu `ssoProtection` — musiał Maciej wyłączyć ręcznie w dashboard
-
-### 2026-03-01 — GSAP DrawSVGPlugin + warianty V2/V3
-- Zamieniono CSS stroke-dasharray na **GSAP DrawSVGPlugin + ScrollTrigger** — lepsza kontrola, stagger, animacja strokeWidth
-- strokeWidth animuje od 0.5 do 7 (oryginalnie 14.87 — o połowę cieńsze)
-- Fix logo: zamieniono `next/image` na `<img>` (Next.js Image nie ładowało PNG)
-- Stworzono **V2** (`/v2`) — ciemny hero, stats cards, SaaS-owy layout
-- Stworzono **V3** (`/v3`) — jasny/kremowy (#faf9f7), styl Streamline (Inspiracja 3), bullet points z ikonami Phosphor, pill buttons
-- Git credentials naprawione przez Admina: per-repo credential helper dla iliantis-code (board #109), normalny `git push` działa
-- Decyzja: CHOSE GSAP DrawSVGPlugin BECAUSE automatyczny stagger, animacja strokeWidth, nie trzeba konwertować path do JSX (REJECTED framer-motion pathLength BECAUSE wymaga ręcznej konwersji każdego path do motion.path)
-- Decyzja: CHOSE podstrony /v2 /v3 BECAUSE łatwiejsze porównanie w przeglądarce (REJECTED osobne branche BECAUSE jeden dev server naraz)
-- Zasada od Macieja: NIE pushować na Vercel z automatu — pracujemy lokalnie, push dopiero po zamknięciu etapu i za zgodą
-
-### 2026-03-01 — Animacje SVG + Vercel deploy
-- Wdrożono kod na GitHub (`iliantis-code/invento-vc`) i Vercel (auto-deploy z main)
-- Dodano `AnimatedIllustration` component — SVG line-drawing animation (stroke-dasharray) triggerowane scrollem
-- Dodano motion transitions (fade-in, slide-up, stagger) na wszystkie strony
-- Pobrano oryginalne logo z invento.vc → `public/invento-logo.png`, wstawione w Nav
-- Dodano pakiet `motion` (importy z `motion/react`)
-- Dodano `global-error.tsx` — workaround na bug Next.js 16 prerender
-- Decyzja: CHOSE SVG inline fetch + CSS stroke-dasharray BECAUSE jedyny sposób animacji wewnętrznych ścieżek SVG (img tag nie daje dostępu do DOM)
-- Decyzja: CHOSE `motion/react` imports BECAUSE nowsza ścieżka pakietu motion, lepsza kompatybilność z React 19
-- FAILED: `npm run build` lokalnie — `_global-error` prerender error (useContext null). Bug Next.js 16 + React 19, nie nasz kod. Vercel buduje OK.
-
-### 2026-03-01 — Budowa strony Next.js
-- Zbudowano 3 podstrony: Homepage, Team, About
-- Stack: Next.js 16 + React 19 + Tailwind 4 + framer-motion + phosphor-icons
-- Skopiowano 46 SVG ilustracji + 2 zdjęcia zespołu do public/
-- Shared: Nav (fixed, active state), Footer (navy)
 
 ## Decyzje
 | Data | Decyzja | Dlaczego | Odrzucone |
@@ -106,6 +79,8 @@
 | 2026-03-02 | GSAP `strokeWidth:` (CSS inline) zamiast `attr:` | Inline style wygrywa specificity nad CSS class rules w SVG `<style>` | `attr: { "stroke-width": }` (przegrywa z CSS) |
 | 2026-03-02 | Numery 01-06 w features V4 | Pasują do hand-drawn stylu | Phosphor ikony (zbyt generyczne) |
 | 2026-03-03 | Pre-clean SVG HTML (regex w fetch) | Eliminuje CSS stroke-width zanim trafi do DOM | Modyfikacja `<style>` textContent w useEffect (za późno) |
+| 2026-03-07 | V3 jako baza finalnej strony | Decyzja Dagmary z rozmowy 7.03 | V1/V2/V4 jako baza |
+| 2026-03-07 | /unicorn ukryty (nie w showroomie) | Demonstracja dla Dagmary pod bezposrednim URL | Widoczny w showroomie |
 
 ## Co nie zadziałało
 - **Figma MCP** — brak fontFamily, kruchy layout, tool limitations
@@ -116,21 +91,26 @@
 - **Modyfikacja `<style>` textContent w useEffect** — usuwanie `stroke-width` z CSS po renderze DOM daje okno czasowe gdzie CSS rule się aplikuje. **NAPRAWIONE**: pre-clean HTML stringa przed `dangerouslySetInnerHTML`
 
 ## Otwarte pytania
-- [OPEN] Responsywność mobile — nie testowane jeszcze
-- [OPEN] Treści bio/about — placeholder tekst, czekamy na content od klienta?
-- [OPEN] Domena invento.vc — podpiąć pod Vercel?
-- [OPEN] Timing animacji SVG — do dopracowania po testach w przeglądarce
+- [OPEN] Symbole Bostonu i Zurychu — propozycje do Dagmary, potem grafiki Nanobanana
+- [OPEN] Mockup rozwijania osoby w team — 3 propozycje do wyboru Dagmary
+- [OPEN] 8 osob team — potrzebne zdjecia i opisy (Robert, Bartek, Sven, Tomasz, Katarzyna, Ewelina, Dagmara, Robert)
+- [OPEN] Formularz kontaktowy — webhook n8n vs bezposredni email
+- [OPEN] Scraper newsow — szukac w historii cc_sessions Claude Admin
+- [OPEN] Ilustracja hero — Dagmara wybierze z /grafiki
+- [OPEN] Responsywnosc mobile — nie testowane jeszcze
+- [OPEN] Domena invento.vc — podpiac pod Vercel?
 
 ## Backlog
-- [x] ~~**FIX**: stroke-width MedTech/Industry 4.0~~ — naprawione (inline CSS style zamiast attr)
-- [ ] Dalsze dopracowanie V3 i V4 (Maciej testuje na żywo)
-- [ ] Wybrać finalny wariant designu (V1/V2/V3/V4) i dopracować
-- [ ] Przetestować animacje GSAP, dopracować timing/stagger
-- [ ] Responsywność mobile
-- [ ] Metadata per page (SEO)
-- [ ] Treści: bio członków zespołu, about pillars (unikalne per pillar)
-- [ ] Lepsze ilustracje per sekcja (dopasowane tematycznie)
-- [ ] Domena invento.vc → Vercel
+Pelna roadmapa: `doc/ROADMAP.md` (9 faz)
+- [x] ~~Wybor wariantu~~ — V3 (decyzja Dagmary 7.03)
+- [ ] Zakladka /grafiki (agent w tle)
+- [ ] Portfolio interaktywne (klikalne sektory)
+- [ ] Lokalizacje (Silesia, Warszawa, Boston, Zurych)
+- [ ] Team rozbudowa (8 osob, rozwijane karty)
+- [ ] News & Insights (layout + scraper)
+- [ ] Funds (3 podstrony: Bridge Alpha, Starter PFR, Americas)
+- [ ] Formularz kontaktowy
+- [ ] Teksty (Claude Desktop + Dagmara)
 
 ## Infrastruktura
 - Dev server: `npm run dev` → port 3500

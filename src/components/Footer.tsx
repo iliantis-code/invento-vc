@@ -8,7 +8,7 @@ export function Footer() {
   const pathname = usePathname();
 
   // Ukryj globalny Footer na wariantach — mają własny
-  if (pathname === "/" || pathname.startsWith("/v2") || pathname.startsWith("/v3") || pathname.startsWith("/v4") || pathname.startsWith("/v5") || pathname.startsWith("/unicorn")) {
+  if (pathname === "/" || pathname.startsWith("/v2") || pathname.startsWith("/v3") || pathname.startsWith("/v4") || pathname.startsWith("/v5") || pathname.startsWith("/unicorn") || pathname.startsWith("/grafiki")) {
     return null;
   }
 
