@@ -1,23 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "motion/react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { ArrowRight, ArrowUpRight, MapPin, Envelope, LinkedinLogo, Target, Handshake, ShieldCheck, Lightning, ChartLineUp } from "@phosphor-icons/react";
 import { AnimatedIllustration } from "@/components/AnimatedIllustration";
 
 const companies = [
-  { name: "Quantia", logo: "/logos/quantia.png" },
-  { name: "CThings.co", logo: "/logos/cthingsco.png" },
-  { name: "Safebox24", logo: "/logos/safebox24.png" },
-  { name: "Jivr", logo: "/logos/jivr.png" },
-  { name: "Zjedz.my", logo: "/logos/zjedzmy.png" },
-  { name: "Waven", logo: "/logos/waven.png" },
-  { name: "Planet Heroes", logo: "/logos/planet-heroes.png" },
-  { name: "Omniscopy", logo: "/logos/omniscopy.png" },
-  { name: "Gridaly", logo: "/logos/gridaly.png" },
-  { name: "Panamint", logo: "/logos/panamint.png" },
-  { name: "ResQuant", logo: "/logos/resquant.png" },
-  { name: "Redigo Carbon", logo: "/logos/redigo-carbon.png" },
+  { name: "Quantia", logo: "/logos/quantia.png", sector: "FinTech" },
+  { name: "CThings.co", logo: "/logos/cthingsco.png", sector: "Industry 4.0" },
+  { name: "Safebox24", logo: "/logos/safebox24.png", sector: "Industry 4.0" },
+  { name: "Jivr", logo: "/logos/jivr.png", sector: "CleanTech" },
+  { name: "Zjedz.my", logo: "/logos/zjedzmy.png", sector: "FinTech" },
+  { name: "Waven", logo: "/logos/waven.png", sector: "MedTech" },
+  { name: "Planet Heroes", logo: "/logos/planet-heroes.png", sector: "CleanTech" },
+  { name: "Omniscopy", logo: "/logos/omniscopy.png", sector: "MedTech" },
+  { name: "Gridaly", logo: "/logos/gridaly.png", sector: "Industry 4.0" },
+  { name: "Panamint", logo: "/logos/panamint.png", sector: "Dual Use" },
+  { name: "ResQuant", logo: "/logos/resquant.png", sector: "Dual Use" },
+  { name: "Redigo Carbon", logo: "/logos/redigo-carbon.png", sector: "CleanTech" },
 ];
 
 const features = [
@@ -48,6 +49,76 @@ const team = [
   { name: "Bartosz Zalewski", role: "Partner", image: "/team/bartosz-zalewski.jpg" },
 ];
 
+function PortfolioSection() {
+  const [activeSector, setActiveSector] = useState<string | null>(null);
+  const filtered = activeSector
+    ? companies.filter((c) => c.sector === activeSector)
+    : companies;
+
+  return (
+    <section id="portfolio" className="border-t border-[#e8e4de] bg-[#f5f3ef]">
+      <div className="mx-auto max-w-6xl px-6 py-20">
+        <div className="flex gap-16">
+          {/* Left — sectors (V1 layout: vertical, illustration on top, name below) */}
+          <div className="hidden shrink-0 flex-col gap-1 md:flex">
+            {sectors.map((cat) => (
+              <button
+                key={cat.name}
+                onClick={() => setActiveSector(activeSector === cat.name ? null : cat.name)}
+                className={`group flex flex-col items-center gap-3 rounded-lg px-4 py-4 text-center transition-all ${
+                  activeSector === cat.name ? "bg-[#faf9f7]" : "hover:bg-[#faf9f7]"
+                }`}
+              >
+                <div className={`transition-opacity ${activeSector === cat.name ? "opacity-100" : "opacity-60 group-hover:opacity-100"}`}>
+                  <AnimatedIllustration
+                    src={cat.icon}
+                    alt={cat.name}
+                    width={56}
+                    height={56}
+                    duration={1.5}
+                    delay={0}
+                    strokeScale={2.0}
+                  />
+                </div>
+                <span className={`text-xs font-bold tracking-wider transition-colors ${
+                  activeSector === cat.name ? "text-[#8dacc7]" : "text-gray-900"
+                }`}>
+                  {cat.name}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {/* Right — logos grid */}
+          <div className="flex-1">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              <AnimatePresence mode="popLayout">
+                {filtered.map((c) => (
+                  <motion.div
+                    key={c.name}
+                    layout
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.25 }}
+                    className="flex h-28 items-center justify-center px-4"
+                  >
+                    <img
+                      src={c.logo}
+                      alt={c.name}
+                      className="h-12 max-w-[120px] object-contain grayscale mix-blend-darken"
+                    />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function V3Page() {
   return (
     <div className="min-h-screen font-sans text-gray-900 antialiased" style={{ backgroundColor: "#faf9f7" }}>
@@ -64,8 +135,8 @@ export default function V3Page() {
             <a href="#contact" className="transition-colors hover:text-gray-900">Contact</a>
             <Link href="/grafiki" className="transition-colors hover:text-gray-900">Grafiki</Link>
           </div>
-          <a href="#contact" className="rounded-full bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800">
-            Get in touch
+          <a href="#contact" className="text-sm italic text-gray-500 underline underline-offset-4 transition-colors hover:text-gray-900">
+            get in touch
           </a>
         </div>
       </nav>
@@ -91,15 +162,21 @@ export default function V3Page() {
               </p>
 
 
-<div className="mt-10 flex items-center gap-3">
-                <button className="inline-flex items-center gap-2 rounded-full bg-gray-900 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-gray-800">
-                  Get started
-                </button>
-                <button className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-5 py-2.5 text-sm text-gray-600 transition-colors hover:border-gray-300 hover:text-gray-900">
-                  Apply now
-                  <ArrowRight size={14} />
-                </button>
+              <div className="mt-10 flex items-center gap-4">
+                <span className="text-lg font-medium text-gray-500">
+                  get in touch
+                </span>
+                <a href="#contact" className="inline-flex w-[100px] items-center justify-center rounded-full border border-gray-300 py-2.5 text-sm font-medium text-gray-700 transition-all duration-300 hover:scale-105 hover:border-[#8dacc7] hover:text-[#8dacc7] hover:shadow-[0_0_0_1px_#8dacc7]">
+                  APPLY
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="inline-flex w-[100px] items-center justify-center rounded-full border border-gray-300 py-2.5 text-gray-500 transition-all duration-300 hover:scale-105 hover:border-[#8dacc7] hover:text-[#8dacc7] hover:shadow-[0_0_0_1px_#8dacc7]">
+                  <LinkedinLogo size={18} />
+                </a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="inline-flex w-[100px] items-center justify-center rounded-full border border-gray-300 py-2.5 text-gray-500 transition-all duration-300 hover:scale-105 hover:border-[#8dacc7] hover:text-[#8dacc7] hover:shadow-[0_0_0_1px_#8dacc7]">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 256 256" fill="currentColor"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm8,191.63V152h24a8,8,0,0,0,0-16H136V112a16,16,0,0,1,16-16h16a8,8,0,0,0,0-16H152a32,32,0,0,0-32,32v24H96a8,8,0,0,0,0,16h24v63.63a88,88,0,1,1,16,0Z"/></svg>
+                </a>
               </div>
+
             </motion.div>
 
             <div className="hidden lg:flex justify-center">
@@ -200,41 +277,8 @@ export default function V3Page() {
         </div>
       </section>
 
-      {/* Sectors */}
-      <section id="portfolio" className="border-t border-[#e8e4de] bg-[#f5f3ef]">
-        <div className="mx-auto max-w-6xl px-6 py-20">
-          <h2 className="mb-10 text-3xl font-bold tracking-tight md:text-4xl">
-            Investment sectors.
-          </h2>
-          <div className="grid gap-6 sm:grid-cols-3 lg:grid-cols-5">
-            {sectors.map((cat, i) => (
-              <motion.div
-                key={cat.name}
-                className="group flex flex-col items-center gap-5 rounded-2xl bg-[#faf9f7] p-8 shadow-sm transition-shadow hover:shadow-md"
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.35, delay: 0.07 * i }}
-              >
-                <div style={{ opacity: cat.opacity }} className="transition-opacity group-hover:opacity-80">
-                  <AnimatedIllustration
-                    src={cat.icon}
-                    alt={cat.name}
-                    width={120}
-                    height={120}
-                    duration={2}
-                    delay={0}
-                    strokeScale={cat.strokeScale}
-                  />
-                </div>
-                <span className="text-sm font-bold uppercase tracking-wider text-gray-700">
-                  {cat.name}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Portfolio — interactive sectors + logos */}
+      <PortfolioSection />
 
       {/* Team */}
       <section id="team" className="bg-[#faf9f7]">
