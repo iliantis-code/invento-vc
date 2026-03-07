@@ -71,13 +71,13 @@ function IllustrationCard({ name }: { name: string }) {
       transition={{ duration: 0.35 }}
       onClick={handleClick}
     >
-      <div className="flex h-[250px] w-[250px] items-center justify-center">
+      <div className="flex h-[400px] w-full items-center justify-center overflow-hidden">
         <AnimatedIllustration
           key={resetKey}
           src={`/illustrations/${name}.svg`}
           alt={name}
-          width={250}
-          height={250}
+          width={400}
+          height={400}
           strokeScale={0.35}
           duration={2.5}
           delay={0}
@@ -135,7 +135,7 @@ export default function GrafikiPage() {
 
       {/* Grid */}
       <main className="mx-auto max-w-6xl px-6 pb-20">
-        <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           {illustrations.map((name) => (
             <IllustrationCard key={name} name={name} />
           ))}

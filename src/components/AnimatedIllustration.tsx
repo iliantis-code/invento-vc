@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -21,6 +21,8 @@ interface AnimatedIllustrationProps {
   stagger?: number;
   /** Override stroke-width normalization percentage (default 0.35) */
   strokeScale?: number;
+  /** Skip ScrollTrigger — start animation immediately on mount */
+  immediate?: boolean;
 }
 
 export function AnimatedIllustration({
@@ -34,6 +36,7 @@ export function AnimatedIllustration({
   strokeFrom = 0.5,
   stagger = 0.08,
   strokeScale = 0.35,
+  immediate = false,
 }: AnimatedIllustrationProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [svgContent, setSvgContent] = useState<string | null>(null);
@@ -50,7 +53,7 @@ export function AnimatedIllustration({
       });
   }, [src]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!svgContent || !containerRef.current) return;
 
     const el = containerRef.current;
@@ -83,7 +86,7 @@ export function AnimatedIllustration({
     gsap.set(paths, { strokeWidth: targetStroke * 0.07, drawSVG: 0 });
 
     // Animate TO target state — ensures final stroke-width is always consistent
-    gsap.to(paths, {
+    const tweenConfig: gsap.TweenVars = {
       drawSVG: "0% 100%",
       strokeWidth: targetStroke,
       stagger,
@@ -91,12 +94,17 @@ export function AnimatedIllustration({
       delay,
       ease: "power2.inOut",
       overwrite: true,
-      scrollTrigger: {
+    };
+
+    if (!immediate) {
+      tweenConfig.scrollTrigger = {
         trigger: el,
         start: "top 85%",
         once: true,
-      },
-    });
+      };
+    }
+
+    gsap.to(paths, tweenConfig);
 
     return () => {
       ScrollTrigger.getAll().forEach((t) => {
@@ -104,7 +112,7 @@ export function AnimatedIllustration({
       });
       gsap.killTweensOf(paths);
     };
-  }, [svgContent, delay, duration, strokeFrom, stagger, strokeScale]);
+  }, [svgContent, delay, duration, strokeFrom, stagger, strokeScale, immediate]);
 
   return (
     <div
@@ -112,10 +120,14 @@ export function AnimatedIllustration({
       role="img"
       aria-label={alt}
       className={`animated-illustration ${className}`}
-      style={{ width, height, opacity: 0 }}
+      style={{ width, height, opacity: 0, overflow: "hidden" }}
     >
       {svgContent && (
-        <div dangerouslySetInnerHTML={{ __html: svgContent }} />
+        <div
+          dangerouslySetInnerHTML={{ __html: svgContent }}
+          style={{ width: "100%", height: "100%" }}
+          className="[&>svg]:h-full [&>svg]:w-full [&>svg]:object-contain"
+        />
       )}
     </div>
   );

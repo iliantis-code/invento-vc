@@ -54,14 +54,15 @@ export default function V3Page() {
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-[#e8e4de] bg-[#faf9f7]/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3.5">
-          <Link href="/v3" className="text-2xl font-bold tracking-tight">
-            invento<span className="text-[#8dacc7]">.</span>
+          <Link href="/v3">
+            <img src="/invento-logo.png" alt="invento." width={120} height={32} />
           </Link>
           <div className="hidden items-center gap-8 text-sm text-gray-500 md:flex">
             <a href="#portfolio" className="transition-colors hover:text-gray-900">Portfolio</a>
             <a href="#about" className="transition-colors hover:text-gray-900">About us</a>
             <a href="#team" className="transition-colors hover:text-gray-900">Team</a>
             <a href="#contact" className="transition-colors hover:text-gray-900">Contact</a>
+            <Link href="/grafiki" className="transition-colors hover:text-gray-900">Grafiki</Link>
           </div>
           <a href="#contact" className="rounded-full bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800">
             Get in touch
@@ -83,21 +84,14 @@ export default function V3Page() {
                 <span className="text-[#8dacc7]">powering exceptional founders.</span>
               </h1>
 
-              <p className="mt-6 max-w-md text-[15px] leading-relaxed text-gray-500">
-                Invento to fundusz venture capital skoncentrowany na rozwiązaniach
-                deeptech i digital. Inwestujemy w early-stage i wspieramy operacyjnie.
+              <p className="mt-6 max-w-md text-lg font-medium leading-relaxed text-gray-500">
+                We back early-stage projects — from seed to scale, across deeptech,
+                digital and beyond. We bring capital, support operationally and
+                connect founders to global networks.
               </p>
 
-              <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-3">
-                {features.slice(0, 4).map((f) => (
-                  <div key={f.title} className="flex items-center gap-2.5">
-                    <div className="h-2 w-2 shrink-0 rounded-full bg-gray-400" />
-                    <span className="text-sm font-medium text-gray-900">{f.title}</span>
-                  </div>
-                ))}
-              </div>
 
-              <div className="mt-10 flex items-center gap-3">
+<div className="mt-10 flex items-center gap-3">
                 <button className="inline-flex items-center gap-2 rounded-full bg-gray-900 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-gray-800">
                   Get started
                 </button>
@@ -108,22 +102,18 @@ export default function V3Page() {
               </div>
             </motion.div>
 
-            <motion.div
-              className="hidden lg:flex justify-center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-            >
+            <div className="hidden lg:flex justify-center">
               <AnimatedIllustration
-                src="/illustrations/burza mozgow.svg"
+                src="/illustrations/idea.svg"
                 alt="Innovation"
                 width={400}
                 height={400}
                 className="opacity-60"
-                duration={2.5}
+                duration={5}
                 delay={0}
+                immediate
               />
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
