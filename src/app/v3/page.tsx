@@ -45,9 +45,88 @@ const sectors = [
 ];
 
 const team = [
-  { name: "Robert Bieleń", role: "Managing Partner", image: "/team/robert-bielen.jpg" },
-  { name: "Bartosz Zalewski", role: "Partner", image: "/team/bartosz-zalewski.jpg" },
+  { name: "Robert Bieleń", role: "General Partner", image: "/team/robert-bielen.jpg", bio: "Lawyer. Venture Capital and Investment Banking experience. Managed over 20 seed and VC investment projects, mentor of early-stage R&D startups.", linkedin: "https://linkedin.com" },
+  { name: "Bartosz Zalewski", role: "General Partner", image: "/team/bartosz-zalewski.jpg", bio: "Economist, specialist in corporate finance, venture capital and private equity with over 20 years of experience. Nearly 50 venture capital investments.", linkedin: "https://linkedin.com" },
+  { name: "Sven Zagała", role: "Partner", image: null, bio: "International corporate and startup experience. Founder and investor in IT, Telco, Web3, SaaS, DeepTech projects.", linkedin: "https://linkedin.com" },
+  { name: "Tomasz Gołąb", role: "Partner", image: null, bio: "", linkedin: "https://linkedin.com" },
+  { name: "Katarzyna Geiger", role: "Partner", image: null, bio: "Corporate experience in responsible supply-chain management and sustainable growth. Investor and mentor in GreenTech Impact projects.", linkedin: "https://linkedin.com" },
+  { name: "Ewelina Wolny", role: "Operations", image: null, bio: "", linkedin: "https://linkedin.com" },
+  { name: "Dagmara Strzębicka", role: "Partner", image: "/team/dagmara-strzebicka.webp", bio: "", linkedin: "https://linkedin.com" },
+  { name: "Robert Mazgaj", role: "Investment Manager", image: null, bio: "Project documentation, business analysis, audit, control. Licensed Financial Advisor since 2010.", linkedin: "https://linkedin.com" },
 ];
+
+function TeamSection() {
+  const [expanded, setExpanded] = useState<string | null>(null);
+
+  return (
+    <section id="team" className="bg-[#faf9f7]">
+      <div className="mx-auto max-w-6xl px-6 py-20">
+        <h2 className="mb-10 text-3xl font-bold tracking-tight md:text-4xl">
+          The team.
+        </h2>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {team.map((p, i) => {
+            const isExpanded = expanded === p.name;
+            return (
+              <motion.div
+                key={p.name}
+                className="cursor-pointer overflow-hidden rounded-2xl bg-[#f5f3ef] transition-shadow hover:shadow-md"
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.05 * i }}
+                onClick={() => setExpanded(isExpanded ? null : p.name)}
+              >
+                <div className="aspect-[4/5] overflow-hidden bg-[#e8e4de]">
+                  {p.image ? (
+                    <img
+                      src={p.image}
+                      alt={p.name}
+                      className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center text-4xl font-bold text-[#d0ccc6]">
+                      {p.name.split(" ").map((n) => n[0]).join("")}
+                    </div>
+                  )}
+                </div>
+                <div className="p-4">
+                  <h3 className="font-semibold text-gray-900">{p.name}</h3>
+                  <p className="text-sm text-gray-400">{p.role}</p>
+                  <AnimatePresence>
+                    {isExpanded && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className="overflow-hidden"
+                      >
+                        {p.bio && (
+                          <p className="mt-3 text-xs leading-relaxed text-gray-500">{p.bio}</p>
+                        )}
+                        <a
+                          href={p.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-[#8dacc7] transition-colors hover:text-gray-900"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <LinkedinLogo size={14} />
+                          LinkedIn
+                        </a>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function PortfolioSection() {
   const [activeSector, setActiveSector] = useState<string | null>(null);
@@ -58,6 +137,16 @@ function PortfolioSection() {
   return (
     <section id="portfolio" className="border-t border-[#e8e4de] bg-[#f5f3ef]">
       <div className="mx-auto max-w-6xl px-6 py-20">
+        <div className="mb-12">
+          <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">
+            Portfolio.
+          </h2>
+          <p className="max-w-2xl text-[15px] leading-relaxed text-gray-500">
+            We invest in founders who tackle problems with innovative technology.
+            Our portfolio spans fintech, medtech, industry 4.0, cleantech and
+            dual-use — united by a commitment to outsized impact.
+          </p>
+        </div>
         <div className="flex gap-16">
           {/* Left — sectors (V1 layout: vertical, illustration on top, name below) */}
           <div className="hidden shrink-0 flex-col gap-1 md:flex">
@@ -132,8 +221,19 @@ export default function V3Page() {
             <a href="#portfolio" className="transition-colors hover:text-gray-900">Portfolio</a>
             <a href="#about" className="transition-colors hover:text-gray-900">About us</a>
             <a href="#team" className="transition-colors hover:text-gray-900">Team</a>
+            <div className="group relative">
+              <button className="transition-colors hover:text-gray-900">Funds</button>
+              <div className="pointer-events-none absolute left-1/2 top-full pt-2 -translate-x-1/2 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
+                <div className="min-w-[160px] rounded-lg border border-[#e8e4de] bg-[#faf9f7] py-1.5 shadow-lg">
+                  <Link href="/funds/bridge-alpha" className="block px-4 py-2 text-sm text-gray-500 transition-colors hover:bg-[#f5f3ef] hover:text-gray-900">Bridge Alpha</Link>
+                  <Link href="/funds/starter-pfr" className="block px-4 py-2 text-sm text-gray-500 transition-colors hover:bg-[#f5f3ef] hover:text-gray-900">Starter PFR</Link>
+                  <Link href="/funds/americas" className="block px-4 py-2 text-sm text-gray-500 transition-colors hover:bg-[#f5f3ef] hover:text-gray-900">Americas</Link>
+                </div>
+              </div>
+            </div>
             <a href="#contact" className="transition-colors hover:text-gray-900">Contact</a>
             <Link href="/grafiki" className="transition-colors hover:text-gray-900">Grafiki</Link>
+            <Link href="/v3333" className="text-[#8dacc7] transition-colors hover:text-gray-900">Dagmara</Link>
           </div>
           <a href="#contact" className="text-sm italic text-gray-500 underline underline-offset-4 transition-colors hover:text-gray-900">
             get in touch
@@ -241,9 +341,12 @@ export default function V3Page() {
         </div>
       </section>
 
+      {/* Portfolio — interactive sectors + logos */}
+      <PortfolioSection />
+
       {/* About — sectors + features */}
       <section id="about" className="bg-[#faf9f7]">
-        <div className="mx-auto max-w-6xl px-6 pb-20">
+        <div className="mx-auto max-w-6xl px-6 py-20">
           <div className="grid gap-16 lg:grid-cols-2">
             <div>
               <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
@@ -277,84 +380,96 @@ export default function V3Page() {
         </div>
       </section>
 
-      {/* Portfolio — interactive sectors + logos */}
-      <PortfolioSection />
-
-      {/* Team */}
-      <section id="team" className="bg-[#faf9f7]">
+      {/* Locations */}
+      <section className="border-t border-[#e8e4de] bg-[#f5f3ef]">
         <div className="mx-auto max-w-6xl px-6 py-20">
           <h2 className="mb-10 text-3xl font-bold tracking-tight md:text-4xl">
-            The team.
+            Locations.
           </h2>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {team.map((p, i) => (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {["Katowice, Poland", "Warsaw, Poland", "Boston, USA", "Zurich, Switzerland"].map((loc, i) => (
               <motion.div
-                key={p.name}
-                className="group overflow-hidden rounded-2xl bg-[#f5f3ef]"
+                key={loc}
+                className="flex flex-col items-center gap-4 rounded-2xl bg-[#faf9f7] p-6"
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: 0.1 * i }}
               >
-                <div className="aspect-[4/5] overflow-hidden">
-                  <img
-                    src={p.image}
-                    alt={p.name}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-5">
-                  <h3 className="font-semibold text-gray-900">{p.name}</h3>
-                  <p className="text-sm text-gray-400">{p.role}</p>
-                </div>
+                <MapPin size={24} className="text-[#8dacc7]" />
+                <span className="text-sm font-medium text-gray-700">{loc}</span>
               </motion.div>
             ))}
-
-            {/* Locations */}
-            <motion.div
-              className="flex flex-col justify-between rounded-2xl bg-[#f5f3ef] p-6"
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.2 }}
-            >
-              <div>
-                <h3 className="mb-5 font-semibold text-gray-900">Our locations</h3>
-                {["Katowice, Poland", "Warsaw, Poland", "USA"].map((loc) => (
-                  <div key={loc} className="mb-2.5 flex items-center gap-2 text-sm text-gray-500">
-                    <MapPin size={15} className="text-gray-300" />
-                    {loc}
-                  </div>
-                ))}
-              </div>
-              <AnimatedIllustration
-                src="/illustrations/mapa.svg"
-                alt="Locations"
-                width={180}
-                height={100}
-                className="mt-6 opacity-30"
-                duration={2}
-                delay={0}
-              />
-            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Team */}
+      <TeamSection />
+
+      {/* Contact form */}
       <section id="contact" className="border-t border-[#e8e4de] bg-[#f5f3ef]">
-        <div className="mx-auto max-w-6xl px-6 py-20 text-center">
-          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
-            Building something exceptional?
-          </h2>
-          <p className="mx-auto mt-3 max-w-md text-[15px] text-gray-500">
-            We&apos;re looking for ambitious founders with breakthrough technology.
-            Let&apos;s talk.
-          </p>
-          <button className="mt-8 inline-flex items-center gap-2 rounded-full bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-800">
-            Apply now
-            <ArrowRight size={14} weight="bold" />
-          </button>
+        <div className="mx-auto max-w-6xl px-6 py-20">
+          <div className="grid gap-16 lg:grid-cols-2">
+            <div>
+              <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
+                Building something exceptional?
+              </h2>
+              <p className="mt-4 max-w-md text-[15px] leading-relaxed text-gray-500">
+                We&apos;re looking for ambitious founders with breakthrough technology.
+                Tell us about your project — we&apos;ll get back to you.
+              </p>
+              <div className="mt-8 space-y-3 text-sm text-gray-500">
+                <div className="flex items-center gap-3">
+                  <Envelope size={16} className="text-[#8dacc7]" />
+                  <a href="mailto:office@invento.vc" className="transition-colors hover:text-gray-900">office@invento.vc</a>
+                </div>
+                <div className="flex items-center gap-3">
+                  <LinkedinLogo size={16} className="text-[#8dacc7]" />
+                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gray-900">LinkedIn</a>
+                </div>
+              </div>
+            </div>
+
+            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <input
+                  type="text"
+                  placeholder="First name"
+                  className="rounded-lg border border-[#e8e4de] bg-[#faf9f7] px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 outline-none transition-colors focus:border-[#8dacc7]"
+                />
+                <input
+                  type="text"
+                  placeholder="Last name"
+                  className="rounded-lg border border-[#e8e4de] bg-[#faf9f7] px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 outline-none transition-colors focus:border-[#8dacc7]"
+                />
+              </div>
+              <input
+                type="email"
+                placeholder="Email"
+                className="w-full rounded-lg border border-[#e8e4de] bg-[#faf9f7] px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 outline-none transition-colors focus:border-[#8dacc7]"
+              />
+              <textarea
+                placeholder="Tell us about your project..."
+                rows={5}
+                className="w-full resize-none rounded-lg border border-[#e8e4de] bg-[#faf9f7] px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 outline-none transition-colors focus:border-[#8dacc7]"
+              />
+              <div>
+                <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-dashed border-[#e8e4de] px-4 py-3 text-sm text-gray-400 transition-colors hover:border-[#8dacc7] hover:text-gray-500">
+                  <ArrowUpRight size={16} className="rotate-90" />
+                  Attach a file (pitch deck, one-pager...)
+                  <input type="file" className="hidden" />
+                </label>
+              </div>
+              <button
+                type="submit"
+                className="inline-flex items-center gap-2 rounded-full bg-gray-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-gray-800"
+              >
+                Send message
+                <ArrowRight size={14} weight="bold" />
+              </button>
+            </form>
+          </div>
         </div>
       </section>
 

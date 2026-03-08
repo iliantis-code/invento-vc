@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { memo, useEffect, useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -25,7 +25,7 @@ interface AnimatedIllustrationProps {
   immediate?: boolean;
 }
 
-export function AnimatedIllustration({
+export const AnimatedIllustration = memo(function AnimatedIllustration({
   src,
   alt,
   width,
@@ -131,4 +131,4 @@ export function AnimatedIllustration({
       )}
     </div>
   );
-}
+});
