@@ -1,5 +1,7 @@
-import { redirect } from "next/navigation";
-
 export default function HomePage() {
-  redirect("/v3");
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-white">
+      <span className="text-3xl font-bold text-gray-900">invento<span className="text-blue-600">.</span></span>
+    </div>
+  );
 }
