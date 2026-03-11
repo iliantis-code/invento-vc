@@ -1,12 +1,23 @@
 # Invento.vc — STATUS
 
 ## Aktualny stan
-- **Branch**: `main` (up to date z origin)
-- **Faza**: Aktywny redesign. **V3 wybrane jako baza finalnej strony** (decyzja Dagmary 7.03). Roadmapa 9 faz w `doc/ROADMAP.md`. Agent w tle tworzy zakladke `/grafiki`.
-- Strona `/unicorn` (pastelowo-rozowa) na Vercel — ukryta demonstracja dla Dagmary
+- **Branch**: `main`
+- **Faza**: Aktywny redesign V3. Strona główna uproszczona (usunięte stats, logo band), nowe SVG lokalizacji (Boston, Zurich), cała struktura skonsolidowana pod `/v3/*`. Schemat podstron ustalony.
 
 ## Ostatnie zmiany
 <!-- /wrap dopisuje nowe wpisy tutaj, najnowsze na górze -->
+
+### 2026-03-11 — Konsolidacja V3, SVG lokalizacji, uproszczenie strony
+- **Backup Home V1** (`/v3/home-v1`) — kopia V3 sprzed zmian
+- **Usunięte sekcje**: Logo band ("Powering exceptional founders"), Stats (13/5/3)
+- **Portfolio przesunięte wyżej** — bezpośrednio pod Hero, logotypy spółek powiększone (h-12→h-16, max-w 120→160px)
+- **SVG lokalizacji**: Boston (Zakim Bridge) i Zurich (Alpy) — PNG z Gemini/Nanobanana skonwertowane na SVG (OpenCV kontury → krzywe Beziera), stroke #383A52, animowane DrawSVGPluginem. Tekst usunięty z obu.
+- **Katowice → Silesia** w nazwie lokalizacji
+- **Team zredukowany**: 4 osoby (Robert, Bartosz, Sven, Dagmara). Zdjęcie bartosz-zalewski.jpg → sven-zagala.jpg (błędne przypisanie)
+- **Konsolidacja pod /v3/**: funds, grafiki, dagmara, home-v1 przeniesione z root do `/v3/*`. Wszystkie linki w nav zaktualizowane.
+- **Schemat podstron Funds**: nav fixed z logo (identyczne jak strona główna), max-w-6xl, breadcrumb "Back to Home" pod navem, pt-28
+- Decyzja: CHOSE konsolidację wszystkich podstron pod /v3/ BECAUSE spójna struktura na Vercelu, bez wycieku do starych routes (REJECTED osobne ścieżki /funds, /grafiki BECAUSE prowadzą do globalnego Nav/Footer)
+- Decyzja: CHOSE OpenCV kontury + Bezier BECAUSE vtracer segfaultował, potrace nie kompilował się na Windows (REJECTED vtracer, pypotrace)
 
 ### 2026-03-07 — V5 Unicorn + roadmapa redesignu
 - **Strona /unicorn** — nowy wariant pastelowo-rozowy (pink-50, violet-800/900) bazujacy na V3. Ukryty przed showroomem, dostepny pod bezposrednim URL
@@ -54,17 +65,6 @@
 - Decyzja: CHOSE `invert mix-blend-screen` dla logotypów na ciemnym tle BECAUSE jedyny sposób na przezroczyste tło bez konwersji do PNG z alpha (REJECTED brightness-0 invert BECAUSE zamienia białe tło w szary prostokąt)
 - Decyzja: CHOSE usunięcie My Owl z portfolio BECAUSE logo niedostępne na serwerze WP pod żadnym wariantem URL
 
-### 2026-03-02 — V4→V5 redesign Cruip Simple + poprawki V1/Team
-- **V4 przerobiony** z ciemnego na jasny styl Cruip Simple (white bg, gray-900 buttons, indigo-600 accenty, browser mockup, sector pills, partner quote, portfolio highlights). Nowe sekcje: browser mockup, sector pills, partner quote blockquote, portfolio highlights cards
-- **V5 stworzony** jako ciemna wersja tego samego layoutu (gray-950, white buttons, blue-400 accenty, SVG z `invert`)
-- **V4 usunięty** (jasny) — Maciej wybrał ciemną wersję (V5)
-- **V1 hero**: "Hands-on capital" w jednej linii, mózg przesunięty `mr-8`, usunięty nieużywany import `Image`
-- **Team lokalizacje**: indywidualne rozmiary SVG per miasto (Katowice 260x90, Warszawa 160x220, USA 100x220), Statua Wolności przesunięta w górę (`-top-12`), indywidualne `speed` animacji (Katowice 3s, Warszawa 0.8s, USA 0.01s)
-- **AnimatedIllustration**: nowy prop `stagger` (domyślnie 0.08) — pozwala kontrolować rozłożenie animacji per instancję. Team 10 osób: stagger=0.02, duration=0.8
-- Decyzja: CHOSE ciemny Cruip (V5) BECAUSE Maciej usunął jasny V4, zostawił ciemny
-- Decyzja: CHOSE indywidualne rozmiary SVG lokalizacji BECAUSE viewBoxy drastycznie różne, jeden width/height nie normalizuje wyglądu
-
-
 ## Decyzje
 | Data | Decyzja | Dlaczego | Odrzucone |
 |------|---------|----------|-----------|
@@ -81,6 +81,10 @@
 | 2026-03-03 | Pre-clean SVG HTML (regex w fetch) | Eliminuje CSS stroke-width zanim trafi do DOM | Modyfikacja `<style>` textContent w useEffect (za późno) |
 | 2026-03-07 | V3 jako baza finalnej strony | Decyzja Dagmary z rozmowy 7.03 | V1/V2/V4 jako baza |
 | 2026-03-07 | /unicorn ukryty (nie w showroomie) | Demonstracja dla Dagmary pod bezposrednim URL | Widoczny w showroomie |
+| 2026-03-11 | Konsolidacja podstron pod /v3/* | Spójna struktura, brak wycieku do starych routes z globalnym Nav | Osobne /funds, /grafiki |
+| 2026-03-11 | Schemat podstron: nav fixed + logo only + breadcrumb | Spójność pozycji logo, max-w-6xl px-6 pt-28 | Back w navie po prawej (obco wyglądało) |
+| 2026-03-11 | OpenCV kontury→Bezier do konwersji PNG→SVG | vtracer segfault, pypotrace nie kompiluje się na Win | vtracer, pypotrace |
+| 2026-03-11 | Team 4 osoby (Robert, Bartosz, Sven, Daga) | Decyzja Macieja — reszta usunięta z V3 | 8-osobowy team |
 
 ## Co nie zadziałało
 - **Figma MCP** — brak fontFamily, kruchy layout, tool limitations
@@ -91,26 +95,25 @@
 - **Modyfikacja `<style>` textContent w useEffect** — usuwanie `stroke-width` z CSS po renderze DOM daje okno czasowe gdzie CSS rule się aplikuje. **NAPRAWIONE**: pre-clean HTML stringa przed `dangerouslySetInnerHTML`
 
 ## Otwarte pytania
-- [OPEN] Symbole Bostonu i Zurychu — propozycje do Dagmary, potem grafiki Nanobanana
-- [OPEN] Mockup rozwijania osoby w team — 3 propozycje do wyboru Dagmary
-- [OPEN] 8 osob team — potrzebne zdjecia i opisy (Robert, Bartek, Sven, Tomasz, Katarzyna, Ewelina, Dagmara, Robert)
 - [OPEN] Formularz kontaktowy — webhook n8n vs bezposredni email
-- [OPEN] Scraper newsow — szukac w historii cc_sessions Claude Admin
-- [OPEN] Ilustracja hero — Dagmara wybierze z /grafiki
-- [OPEN] Responsywnosc mobile — nie testowane jeszcze
-- [OPEN] Domena invento.vc — podpiac pod Vercel?
+- [OPEN] Scraper newsów — szukać w historii cc_sessions Claude Admin
+- [OPEN] Ilustracja hero — Dagmara wybierze z /v3/grafiki
+- [OPEN] Responsywność mobile — nie testowane jeszcze
+- [OPEN] Domena invento.vc — podpiąć pod Vercel?
+- [OPEN] Zdjęcie Bartosza Zalewskiego — brak (placeholder inicjały BZ)
 
 ## Backlog
 Pelna roadmapa: `doc/ROADMAP.md` (9 faz)
 - [x] ~~Wybor wariantu~~ — V3 (decyzja Dagmary 7.03)
-- [ ] Zakladka /grafiki (agent w tle)
-- [ ] Portfolio interaktywne (klikalne sektory)
-- [ ] Lokalizacje (Silesia, Warszawa, Boston, Zurych)
-- [ ] Team rozbudowa (8 osob, rozwijane karty)
+- [x] ~~Zakladka /grafiki~~ → `/v3/grafiki`
+- [x] ~~Portfolio interaktywne~~ (klikalne sektory)
+- [x] ~~Lokalizacje~~ (Silesia, Warszawa, Boston, Zurych — SVG animowane)
+- [x] ~~Team~~ — 4 osoby (Robert, Bartosz, Sven, Daga)
+- [x] ~~Funds~~ — 3 podstrony pod `/v3/funds/*`
+- [x] ~~Formularz kontaktowy~~ — layout gotowy, brakuje webhook
 - [ ] News & Insights (layout + scraper)
-- [ ] Funds (3 podstrony: Bridge Alpha, Starter PFR, Americas)
-- [ ] Formularz kontaktowy
 - [ ] Teksty (Claude Desktop + Dagmara)
+- [ ] Responsywność mobile
 
 ## Infrastruktura
 - Dev server: `npm run dev` → port 3500

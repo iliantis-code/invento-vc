@@ -15,7 +15,7 @@ export function Nav() {
   const pathname = usePathname();
 
   // Ukryj globalny Nav na wariantach które mają własny
-  if (pathname === "/" || pathname.startsWith("/v2") || pathname.startsWith("/v3") || pathname.startsWith("/v4") || pathname.startsWith("/v5") || pathname.startsWith("/unicorn") || pathname.startsWith("/grafiki")) {
+  if (pathname === "/" || pathname.startsWith("/v2") || pathname.startsWith("/v3") || pathname.startsWith("/v4") || pathname.startsWith("/v5") || pathname.startsWith("/unicorn") || pathname.startsWith("/grafiki") || pathname.startsWith("/home-v1")) {
     return null;
   }
 

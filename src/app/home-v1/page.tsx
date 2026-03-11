@@ -46,9 +46,13 @@ const sectors = [
 
 const team = [
   { name: "Robert Bieleń", role: "General Partner", image: "/team/robert-bielen.jpg", bio: "Lawyer. Venture Capital and Investment Banking experience. Managed over 20 seed and VC investment projects, mentor of early-stage R&D startups.", linkedin: "https://linkedin.com" },
-  { name: "Bartosz Zalewski", role: "General Partner", image: null, bio: "Economist, specialist in corporate finance, venture capital and private equity with over 20 years of experience. Nearly 50 venture capital investments.", linkedin: "https://linkedin.com" },
-  { name: "Sven Zagała", role: "Partner", image: "/team/sven-zagala.jpg", bio: "International corporate and startup experience. Founder and investor in IT, Telco, Web3, SaaS, DeepTech projects.", linkedin: "https://linkedin.com" },
+  { name: "Bartosz Zalewski", role: "General Partner", image: "/team/bartosz-zalewski.jpg", bio: "Economist, specialist in corporate finance, venture capital and private equity with over 20 years of experience. Nearly 50 venture capital investments.", linkedin: "https://linkedin.com" },
+  { name: "Sven Zagała", role: "Partner", image: null, bio: "International corporate and startup experience. Founder and investor in IT, Telco, Web3, SaaS, DeepTech projects.", linkedin: "https://linkedin.com" },
+  { name: "Tomasz Gołąb", role: "Partner", image: null, bio: "", linkedin: "https://linkedin.com" },
+  { name: "Katarzyna Geiger", role: "Partner", image: null, bio: "Corporate experience in responsible supply-chain management and sustainable growth. Investor and mentor in GreenTech Impact projects.", linkedin: "https://linkedin.com" },
+  { name: "Ewelina Wolny", role: "Operations", image: null, bio: "", linkedin: "https://linkedin.com" },
   { name: "Dagmara Strzębicka", role: "Partner", image: "/team/dagmara-strzebicka.webp", bio: "", linkedin: "https://linkedin.com" },
+  { name: "Robert Mazgaj", role: "Investment Manager", image: null, bio: "Project documentation, business analysis, audit, control. Licensed Financial Advisor since 2010.", linkedin: "https://linkedin.com" },
 ];
 
 function TeamSection() {
@@ -186,12 +190,12 @@ function PortfolioSection() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.9 }}
                     transition={{ duration: 0.25 }}
-                    className="flex h-36 items-center justify-center px-4"
+                    className="flex h-28 items-center justify-center px-4"
                   >
                     <img
                       src={c.logo}
                       alt={c.name}
-                      className="h-16 max-w-[160px] object-contain grayscale mix-blend-darken"
+                      className="h-12 max-w-[120px] object-contain grayscale mix-blend-darken"
                     />
                   </motion.div>
                 ))}
@@ -221,16 +225,15 @@ export default function V3Page() {
               <button className="transition-colors hover:text-gray-900">Funds</button>
               <div className="pointer-events-none absolute left-1/2 top-full pt-2 -translate-x-1/2 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
                 <div className="min-w-[160px] rounded-lg border border-[#e8e4de] bg-[#faf9f7] py-1.5 shadow-lg">
-                  <Link href="/v3/funds/bridge-alpha" className="block px-4 py-2 text-sm text-gray-500 transition-colors hover:bg-[#f5f3ef] hover:text-gray-900">Bridge Alpha</Link>
-                  <Link href="/v3/funds/starter-pfr" className="block px-4 py-2 text-sm text-gray-500 transition-colors hover:bg-[#f5f3ef] hover:text-gray-900">Starter PFR</Link>
-                  <Link href="/v3/funds/americas" className="block px-4 py-2 text-sm text-gray-500 transition-colors hover:bg-[#f5f3ef] hover:text-gray-900">Americas</Link>
+                  <Link href="/funds/bridge-alpha" className="block px-4 py-2 text-sm text-gray-500 transition-colors hover:bg-[#f5f3ef] hover:text-gray-900">Bridge Alpha</Link>
+                  <Link href="/funds/starter-pfr" className="block px-4 py-2 text-sm text-gray-500 transition-colors hover:bg-[#f5f3ef] hover:text-gray-900">Starter PFR</Link>
+                  <Link href="/funds/americas" className="block px-4 py-2 text-sm text-gray-500 transition-colors hover:bg-[#f5f3ef] hover:text-gray-900">Americas</Link>
                 </div>
               </div>
             </div>
             <a href="#contact" className="transition-colors hover:text-gray-900">Contact</a>
-            <Link href="/v3/grafiki" className="transition-colors hover:text-gray-900">Grafiki</Link>
-            <Link href="/v3/dagmara" className="text-[#8dacc7] transition-colors hover:text-gray-900">Dagmara</Link>
-            <Link href="/v3/home-v1" className="text-[#8dacc7] transition-colors hover:text-gray-900">Home V1</Link>
+            <Link href="/grafiki" className="transition-colors hover:text-gray-900">Grafiki</Link>
+            <Link href="/v3333" className="text-[#8dacc7] transition-colors hover:text-gray-900">Dagmara</Link>
           </div>
           <a href="#contact" className="text-sm italic text-gray-500 underline underline-offset-4 transition-colors hover:text-gray-900">
             get in touch
@@ -292,6 +295,51 @@ export default function V3Page() {
         </div>
       </section>
 
+      {/* Logo band */}
+      <section className="border-y border-[#e8e4de] bg-[#f5f3ef]">
+        <div className="mx-auto max-w-6xl px-6 py-10">
+          <p className="mb-2 text-center text-lg font-bold text-gray-900">
+            Powering exceptional founders across deeptech & digital.
+          </p>
+          <p className="mb-8 text-center text-base text-gray-400">
+            From early-stage ventures to category-defining companies.
+          </p>
+          <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+            <div className="flex w-max items-center gap-16 animate-[marquee_120s_linear_infinite]">
+              {[...companies, ...companies].map((c, i) => (
+                <span key={`${c.name}-${i}`} className="shrink-0 opacity-50">
+                  <img
+                    src={c.logo}
+                    alt={c.name}
+                    className="h-14 object-contain grayscale mix-blend-darken"
+                  />
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats */}
+      <section className="bg-[#faf9f7]">
+        <div className="mx-auto max-w-6xl px-6 py-20">
+          <div className="grid gap-4 md:grid-cols-3">
+            {stats.map((s, i) => (
+              <motion.div
+                key={s.label}
+                className="rounded-2xl bg-[#f5f3ef] p-8"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.1 * i }}
+              >
+                <div className="text-5xl font-bold tracking-tight">{s.value}</div>
+                <div className="mt-2 text-sm font-medium text-gray-500">{s.label}</div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Portfolio — interactive sectors + logos */}
       <PortfolioSection />
@@ -339,35 +387,17 @@ export default function V3Page() {
             Locations.
           </h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              { name: "Silesia, Poland", illustration: "/illustrations/Katowice.svg" },
-              { name: "Warsaw, Poland", illustration: "/illustrations/Warszawa.svg" },
-              { name: "Boston, USA", illustration: "/illustrations/boston.svg" },
-              { name: "Zurich, Switzerland", illustration: "/illustrations/zurich.svg" },
-            ].map((loc, i) => (
+            {["Katowice, Poland", "Warsaw, Poland", "Boston, USA", "Zurich, Switzerland"].map((loc, i) => (
               <motion.div
-                key={loc.name}
+                key={loc}
                 className="flex flex-col items-center gap-4 rounded-2xl bg-[#faf9f7] p-6"
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: 0.1 * i }}
               >
-                {loc.illustration ? (
-                  <AnimatedIllustration
-                    src={loc.illustration}
-                    alt={loc.name}
-                    width={120}
-                    height={120}
-                    duration={2}
-                    delay={0}
-                    strokeScale={0.5}
-                    className="opacity-60"
-                  />
-                ) : (
-                  <MapPin size={24} className="text-[#8dacc7]" />
-                )}
-                <span className="text-sm font-medium text-gray-700">{loc.name}</span>
+                <MapPin size={24} className="text-[#8dacc7]" />
+                <span className="text-sm font-medium text-gray-700">{loc}</span>
               </motion.div>
             ))}
           </div>
