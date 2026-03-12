@@ -6,6 +6,13 @@ import { motion, AnimatePresence } from "motion/react";
 import { ArrowRight, ArrowUpRight, MapPin, Envelope, LinkedinLogo, Target, Handshake, ShieldCheck, Lightning, ChartLineUp } from "@phosphor-icons/react";
 import { AnimatedIllustration } from "@/components/AnimatedIllustration";
 
+const heroSlides = [
+  { src: "/illustrations/idea.svg", alt: "Innovation" },
+  { src: "/illustrations/burza mozgow.svg", alt: "Brainstorm" },
+  { src: "/illustrations/idea.svg", alt: "Slide 3" },       // placeholder — zamień src
+  { src: "/illustrations/idea.svg", alt: "Slide 4" },       // placeholder — zamień src
+];
+
 const companies = [
   { name: "Quantia", logo: "/logos/quantia.png", sector: "FinTech" },
   { name: "CThings.co", logo: "/logos/cthingsco.png", sector: "Industry 4.0" },
@@ -42,6 +49,37 @@ const sectors = [
   { name: "Industry 4.0", icon: "/illustrations/tech industry.svg", opacity: 0.45, strokeScale: 1.0 },
   { name: "CleanTech", icon: "/illustrations/clean tech.svg", opacity: 0.7, strokeScale: 1.0 },
   { name: "Dual Use", icon: "/illustrations/dron.svg", opacity: 0.6, strokeScale: 1.0 },
+];
+
+const news = [
+  {
+    title: 'Resquant w raporcie „Innowacje albo dryf. Polska mapa wzrostu 2026-2035"',
+    excerpt: "ResQuant, spółka portfelowa Invento, została wyróżniona w najnowszym raporcie analitycznym jako jeden z kluczowych graczy polskiego ekosystemu deeptech.",
+    tag: "Spółki",
+    date: "Mar 8, 2026",
+    logo: "ResQuant",
+  },
+  {
+    title: "Gridaly partnerem Carpathian Startup Fest",
+    excerpt: "Gridaly, nasza spółka z sektora Industry 4.0, została oficjalnym partnerem technologicznym tegorocznej edycji Carpathian Startup Fest w Rzeszowie.",
+    tag: "Spółki",
+    date: "Mar 3, 2026",
+    logo: "Gridaly",
+  },
+  {
+    title: "Współpraca z UW. Dagmara w jury finału Brave Camp",
+    excerpt: "Dagmara Strzębicka, partnerka Invento, zasiadła w jury finałowej gali programu Brave Camp na Uniwersytecie Warszawskim.",
+    tag: "Ludzie",
+    date: "Feb 22, 2026",
+    logo: "Brave Camp",
+  },
+  {
+    title: "Spotkajmy się w maju na InfoShare",
+    excerpt: "Zespół Invento będzie obecny na InfoShare 2026 w Gdańsku. Zapraszamy founderów i inwestorów na spotkania networkingowe.",
+    tag: "Fundusz",
+    date: "Feb 15, 2026",
+    logo: "InfoShare",
+  },
 ];
 
 const team = [
@@ -126,47 +164,33 @@ function TeamSection() {
 
 function PortfolioSection() {
   const [activeSector, setActiveSector] = useState<string | null>(null);
-  const filtered = activeSector
-    ? companies.filter((c) => c.sector === activeSector)
-    : companies;
-
   return (
-    <section id="portfolio" className="border-t border-[#e8e4de] bg-[#f5f3ef]">
+    <section id="portfolio" className="border-t border-[#e8e4de] bg-[#faf9f7]">
       <div className="mx-auto max-w-6xl px-6 py-20">
-        <div className="mb-12">
-          <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">
-            Portfolio.
-          </h2>
-          <p className="max-w-2xl text-[15px] leading-relaxed text-gray-500">
-            We invest in founders who tackle problems with innovative technology.
-            Our portfolio spans fintech, medtech, industry 4.0, cleantech and
-            dual-use — united by a commitment to outsized impact.
-          </p>
-        </div>
-        <div className="flex gap-16">
-          {/* Left — sectors (V1 layout: vertical, illustration on top, name below) */}
-          <div className="hidden shrink-0 flex-col gap-1 md:flex">
+        <div className="flex gap-12 lg:gap-16">
+          {/* Left — sector icons stacked vertically */}
+          <div className="hidden shrink-0 flex-col gap-0 md:flex">
             {sectors.map((cat) => (
               <button
                 key={cat.name}
                 onClick={() => setActiveSector(activeSector === cat.name ? null : cat.name)}
-                className={`group flex flex-col items-center gap-3 rounded-lg px-4 py-4 text-center transition-all ${
-                  activeSector === cat.name ? "bg-[#faf9f7]" : "hover:bg-[#faf9f7]"
+                className={`group flex flex-col items-center gap-2 rounded-xl px-5 py-4 text-center transition-all ${
+                  activeSector === cat.name ? "bg-[#f0eeea]" : "hover:bg-[#f0eeea]"
                 }`}
               >
-                <div className={`transition-opacity ${activeSector === cat.name ? "opacity-100" : "opacity-60 group-hover:opacity-100"}`}>
+                <div className={`transition-opacity ${activeSector === cat.name ? "opacity-100" : "opacity-50 group-hover:opacity-100"}`}>
                   <AnimatedIllustration
                     src={cat.icon}
                     alt={cat.name}
-                    width={56}
-                    height={56}
+                    width={52}
+                    height={52}
                     duration={1.5}
                     delay={0}
                     strokeScale={2.0}
                   />
                 </div>
-                <span className={`text-xs font-bold tracking-wider transition-colors ${
-                  activeSector === cat.name ? "text-[#8dacc7]" : "text-gray-900"
+                <span className={`text-[10px] font-bold uppercase tracking-widest transition-colors ${
+                  activeSector === cat.name ? "text-[#8dacc7]" : "text-gray-500 group-hover:text-gray-900"
                 }`}>
                   {cat.name}
                 </span>
@@ -174,28 +198,28 @@ function PortfolioSection() {
             ))}
           </div>
 
-          {/* Right — logos grid */}
+          {/* Right — logos in white cards with border */}
           <div className="flex-1">
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-              <AnimatePresence mode="popLayout">
-                {filtered.map((c) => (
+              {companies.map((c) => {
+                const isActive = !activeSector || c.sector === activeSector;
+                return (
                   <motion.div
                     key={c.name}
-                    layout
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.25 }}
-                    className="flex h-36 items-center justify-center px-4"
+                    animate={{ opacity: isActive ? 1 : 0.3 }}
+                    transition={{ duration: 0.3 }}
+                    className="flex h-28 items-center justify-center rounded-xl border border-[#e8e4de] bg-white px-4 shadow-sm"
                   >
                     <img
                       src={c.logo}
                       alt={c.name}
-                      className="h-16 max-w-[160px] object-contain grayscale mix-blend-darken"
+                      className={`h-12 max-w-[140px] object-contain transition-all duration-300 ${
+                        isActive ? "grayscale-0" : "grayscale"
+                      }`}
                     />
                   </motion.div>
-                ))}
-              </AnimatePresence>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -205,6 +229,7 @@ function PortfolioSection() {
 }
 
 export default function V3Page() {
+  const [activeHeroSlide, setActiveHeroSlide] = useState(0);
   return (
     <div className="min-h-screen font-sans text-gray-900 antialiased" style={{ backgroundColor: "#faf9f7" }}>
       {/* Nav */}
@@ -227,14 +252,13 @@ export default function V3Page() {
                 </div>
               </div>
             </div>
+            <a href="#news" className="transition-colors hover:text-gray-900">News</a>
             <a href="#contact" className="transition-colors hover:text-gray-900">Contact</a>
             <Link href="/v3/grafiki" className="transition-colors hover:text-gray-900">Grafiki</Link>
             <Link href="/v3/dagmara" className="text-[#8dacc7] transition-colors hover:text-gray-900">Dagmara</Link>
             <Link href="/v3/home-v1" className="text-[#8dacc7] transition-colors hover:text-gray-900">Home V1</Link>
           </div>
-          <a href="#contact" className="text-sm italic text-gray-500 underline underline-offset-4 transition-colors hover:text-gray-900">
-            get in touch
-          </a>
+          <div />
         </div>
       </nav>
 
@@ -276,17 +300,43 @@ export default function V3Page() {
 
             </motion.div>
 
-            <div className="hidden lg:flex justify-center">
-              <AnimatedIllustration
-                src="/illustrations/idea.svg"
-                alt="Innovation"
-                width={400}
-                height={400}
-                className="opacity-60"
-                duration={5}
-                delay={0}
-                immediate
-              />
+            <div className="hidden lg:flex flex-col items-center">
+              <div className="relative h-[400px] w-[400px]">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeHeroSlide}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="absolute inset-0"
+                  >
+                    <AnimatedIllustration
+                      src={heroSlides[activeHeroSlide].src}
+                      alt={heroSlides[activeHeroSlide].alt}
+                      width={400}
+                      height={400}
+                      className="opacity-60"
+                      duration={5}
+                      delay={0}
+                      immediate
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+              <div className="mt-12 flex items-center gap-3">
+                {heroSlides.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveHeroSlide(i)}
+                    className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${
+                      i === activeHeroSlide
+                        ? "bg-[#8dacc7] scale-125"
+                        : "bg-[#c5d3de] hover:bg-[#8dacc7]/60"
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -377,6 +427,61 @@ export default function V3Page() {
       {/* Team */}
       <TeamSection />
 
+      {/* News & Insights */}
+      <section id="news" className="border-t border-[#e8e4de] bg-[#faf9f7]">
+        <div className="mx-auto max-w-6xl px-6 py-20">
+          <div className="flex items-end justify-between">
+            <div>
+              <p className="text-sm font-medium uppercase tracking-widest text-[#8dacc7]">Stay updated</p>
+              <h2 className="mt-2 text-3xl font-bold tracking-tight md:text-4xl">
+                News & Insights
+              </h2>
+            </div>
+            <button className="hidden items-center gap-2 text-sm text-gray-500 transition-colors hover:text-gray-900 md:inline-flex">
+              View all
+              <ArrowRight size={14} />
+            </button>
+          </div>
+
+          <div className="mt-10 divide-y divide-[#e8e4de]">
+            {news.map((item, i) => (
+              <motion.article
+                key={item.title}
+                className="group cursor-pointer flex gap-4 py-7 sm:items-start"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-30px" }}
+                transition={{ duration: 0.5, delay: 0.08 * i }}
+              >
+                <div className="hidden sm:flex h-14 w-24 shrink-0 items-center justify-center rounded-lg bg-[#f5f3ef] text-xs font-bold text-gray-400 border border-[#e8e4de]">
+                  {item.logo}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-3 mb-1.5">
+                    <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-medium ${
+                      item.tag === "Spółki" ? "bg-blue-50 text-blue-600" :
+                      item.tag === "Fundusz" ? "bg-amber-50 text-amber-600" :
+                      item.tag === "Ludzie" ? "bg-emerald-50 text-emerald-600" :
+                      "bg-gray-100 text-gray-500"
+                    }`}>
+                      {item.tag}
+                    </span>
+                    <span className="text-xs text-gray-400">{item.date}</span>
+                  </div>
+                  <h3 className="text-[15px] font-semibold text-gray-900 transition-colors group-hover:text-[#8dacc7]">
+                    {item.title}
+                  </h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-gray-500 line-clamp-2">
+                    {item.excerpt}
+                  </p>
+                </div>
+                <ArrowRight size={16} className="mt-1 shrink-0 text-gray-300 transition-all group-hover:text-[#8dacc7] group-hover:translate-x-1" />
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Contact form */}
       <section id="contact" className="border-t border-[#e8e4de] bg-[#f5f3ef]">
         <div className="mx-auto max-w-6xl px-6 py-20">
@@ -446,7 +551,7 @@ export default function V3Page() {
       {/* Footer */}
       <footer className="bg-gray-950">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-          <span className="text-3xl font-bold text-white">invento<span className="text-blue-600">.</span></span>
+          <img src="/invento-logo.png" alt="invento." width={120} height={32} className="brightness-0 invert" />
           <div className="flex items-center gap-4">
             <a href="mailto:office@invento.vc" className="text-gray-500 transition-colors hover:text-gray-300">
               <Envelope size={18} />

@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-03-12
+
+### Dodane
+- Sekcja **News & Insights** na stronie V3 (po Team, przed Contact) — wariant lista z dividerami, 4 tagi: Spółki, Fundusz, Ludzie, Inne
+- **Hero carousel** — 4 sloty ilustracji SVG z kropkami nawigacyjnymi (żarówka + mózg + 2 placeholdery do uzupełnienia)
+- Bannery EU na podstronach funduszy: `ue-banner.png` (Bridge Alpha), `pfr-banner.png` (Starter PFR) — PNG z przezroczystym tłem, flood fill od krawędzi
+- Podstrona `/v3/news-preview` — 4 warianty layoutu newsów do porównania (Dagmara wybrała wariant A)
+- Pełne menu nawigacyjne na podstronach funduszy (Bridge Alpha, Starter PFR, Americas)
+- "News" dodane do nawigacji głównej V3
+
+### Zmienione
+- **Portfolio** przerobione na layout V1 (białe karty z ramką + sektory SVG po lewej), mechanizm: klik sektor → wybrane logotypy kolorowe, reszta grayscale + opacity 30%
+- Usunięto "get in touch" z prawego górnego rogu nav na wszystkich stronach
+- Footer V3 — logotyp zmieniony z tekstu na PNG z `brightness-0 invert`
+- Linki nav na podstronach funduszy wskazują na `/v3#sekcja`
+- Tagi newsów zmienione na polskie: Spółki, Fundusz, Ludzie, Inne
+
+### Naprawione
+- Hero carousel: key oparty na indeksie zamiast src — naprawia brak reakcji gdy sloty mają ten sam placeholder SVG
+
 ## 2026-03-11
 
 ### Dodane

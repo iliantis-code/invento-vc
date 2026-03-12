@@ -9,6 +9,23 @@ export default function StarterPfrPage() {
           <Link href="/v3">
             <img src="/invento-logo.png" alt="invento." width={120} height={32} />
           </Link>
+          <div className="hidden items-center gap-8 text-sm text-gray-500 md:flex">
+            <Link href="/v3#portfolio" className="transition-colors hover:text-gray-900">Portfolio</Link>
+            <Link href="/v3#about" className="transition-colors hover:text-gray-900">About us</Link>
+            <Link href="/v3#team" className="transition-colors hover:text-gray-900">Team</Link>
+            <div className="group relative">
+              <button className="transition-colors hover:text-gray-900">Funds</button>
+              <div className="pointer-events-none absolute left-1/2 top-full pt-2 -translate-x-1/2 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
+                <div className="min-w-[160px] rounded-lg border border-[#e8e4de] bg-[#faf9f7] py-1.5 shadow-lg">
+                  <Link href="/v3/funds/bridge-alpha" className="block px-4 py-2 text-sm text-gray-500 transition-colors hover:bg-[#f5f3ef] hover:text-gray-900">Bridge Alpha</Link>
+                  <Link href="/v3/funds/starter-pfr" className="block px-4 py-2 text-sm text-gray-500 transition-colors hover:bg-[#f5f3ef] hover:text-gray-900">Starter PFR</Link>
+                  <Link href="/v3/funds/americas" className="block px-4 py-2 text-sm text-gray-500 transition-colors hover:bg-[#f5f3ef] hover:text-gray-900">Americas</Link>
+                </div>
+              </div>
+            </div>
+            <Link href="/v3#contact" className="transition-colors hover:text-gray-900">Contact</Link>
+          </div>
+          <div />
         </div>
       </nav>
 
@@ -47,9 +64,12 @@ export default function StarterPfrPage() {
           </p>
         </div>
 
-        {/* EU logos placeholder */}
-        <div className="mt-16 rounded-2xl border border-[#e8e4de] bg-[#f5f3ef] p-8 text-center text-sm text-gray-400">
-          EU / PFR co-financing logos
+        <div className="mt-16">
+          <img
+            src="/logos/pfr-banner.png"
+            alt="European Funds / Republic of Poland / European Union co-financing logos"
+            className="w-full"
+          />
         </div>
       </main>
     </div>
