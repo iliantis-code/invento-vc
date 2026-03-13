@@ -1,5 +1,25 @@
 # Changelog
 
+## 2026-03-13
+
+### Dodane
+- Pure CSS line-drawing animation dla hero żarówki (`@keyframes heroDrawStroke` z `stroke-dasharray/dashoffset`) — startuje natychmiast z parsowaniem HTML
+- SVG prefetch cache w `AnimatedIllustration` — moduł-level `svgCache` Map, eksportowany `prefetchSvg()`
+- Prop `inlineSvg` w `AnimatedIllustration` — pomija fetch, SVG dostępny od pierwszego rendera
+- Preload `<link>` w layout.tsx dla brain SVG
+
+### Zmienione
+- `idea.svg` rozbity z 1 path na 5 osobnych ścieżek (podstawa, trzonek, żarnik, bańka, powrót)
+- Hero carousel slidy 3-4 ustawione jako puste placeholdery (były duplikatem żarówki)
+- Hero animacja przyspieszona: duration 5→2.5s, stagger 0.08→0.03s
+- Hero slide 0 renderowany jako czysty HTML/CSS (bez React AnimatedIllustration)
+- Stroke-width hero żarówki: 1.2 (cieńszy)
+
+### Naprawione
+- Żarówka wyświetlała się na slidach 1, 3 i 4 zamiast tylko na slidzie 1
+- Animacja hero opóźniona o 2-3s po załadowaniu strony (waterfall: JS load → React hydration → fetch → GSAP)
+- Przy 1-path SVG żarówki animacja DrawSVG wyglądała jak flash końcówki zamiast rysowania elementów
+
 ## 2026-03-12
 
 ### Dodane

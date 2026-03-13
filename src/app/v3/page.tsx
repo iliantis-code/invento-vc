@@ -4,13 +4,19 @@ import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowRight, ArrowUpRight, MapPin, Envelope, LinkedinLogo, Target, Handshake, ShieldCheck, Lightning, ChartLineUp } from "@phosphor-icons/react";
-import { AnimatedIllustration } from "@/components/AnimatedIllustration";
+import { AnimatedIllustration, prefetchSvg } from "@/components/AnimatedIllustration";
+
+// Pure CSS-animated SVG — starts drawing the MOMENT browser parses HTML, zero JS dependency
+const IDEA_CSS_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 203.01 270.29" style="width:100%;height:100%;object-fit:contain"><defs><style>@keyframes heroDrawStroke{from{stroke-dashoffset:2000}to{stroke-dashoffset:0}}.hero-p{fill:none;stroke:#2B2A29;stroke-miterlimit:22.9256;stroke-width:1.2;stroke-dasharray:2000;stroke-dashoffset:2000;animation:heroDrawStroke 2s ease-in-out forwards}</style></defs><g><path class="hero-p" style="animation-delay:0s" d="M171.36 269.43c21.65,-25.48 -49.01,11.98 -29.65,-6.71 32.59,-31.46 62.33,-18.68 22.73,-8.92 -25.38,6.25 -57.29,2.93 -6.36,-11.79 43.81,-12.66 20.16,-15.46 -5.67,-6.13 -25.53,9.22 -34.82,4.89 1.74,-5.71 25.16,-7.29 25.12,-26.08 -8.08,-12.78 -22.39,8.97 -18.07,-4.78 4.36,-28.81"/><path class="hero-p" style="animation-delay:0.2s" d="M150.43 188.58c13.15,-14.09 -58.05,-22.26 -42.59,-81.46"/><path class="hero-p" style="animation-delay:0.4s" d="M107.84 107.12c4.89,-18.74 19.35,-32.8 21.14,-34.65 12.7,-13.12 21.18,10.29 -18.04,8.03 -7.34,-0.42 -14.71,2.44 -32.78,9.55 -67.17,26.44 -17.19,-30.04 -4.53,8.94 1.74,5.36 11.24,11.8 31.52,19.21"/><path class="hero-p" style="animation-delay:0.6s" d="M105.15 118.20c67.3,24.61 -46.64,66.51 33.13,48.3 51.04,-11.65 78.07,-66.97 55.15,-113.38 -17.42,-35.28 -61.28,-60.39 -116.63,-49.07 -65.53,13.4 -99.82,89.14 -55.55,141.48"/><path class="hero-p" style="animation-delay:0.8s" d="M21.25 145.53c39.49,46.68 83.43,31.45 95.87,54.47 5.06,9.36 2.24,33.84 19.52,27.95"/></g></svg>`;
+
+// Prefetch brain SVG for slide 2
+prefetchSvg("/illustrations/burza mozgow.svg");
 
 const heroSlides = [
-  { src: "/illustrations/idea.svg", alt: "Innovation" },
-  { src: "/illustrations/burza mozgow.svg", alt: "Brainstorm" },
-  { src: "/illustrations/idea.svg", alt: "Slide 3" },       // placeholder — zamień src
-  { src: "/illustrations/idea.svg", alt: "Slide 4" },       // placeholder — zamień src
+  { src: "/illustrations/idea.svg", alt: "Innovation", cssSvg: IDEA_CSS_SVG },
+  { src: "/illustrations/burza mozgow.svg", alt: "Brainstorm", cssSvg: undefined },
+  { src: null, alt: "Slide 3", cssSvg: undefined },       // placeholder — zamień src
+  { src: null, alt: "Slide 4", cssSvg: undefined },       // placeholder — zamień src
 ];
 
 const companies = [
@@ -302,27 +308,46 @@ export default function V3Page() {
 
             <div className="hidden lg:flex flex-col items-center">
               <div className="relative h-[400px] w-[400px]">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeHeroSlide}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="absolute inset-0"
-                  >
-                    <AnimatedIllustration
-                      src={heroSlides[activeHeroSlide].src}
-                      alt={heroSlides[activeHeroSlide].alt}
-                      width={400}
-                      height={400}
-                      className="opacity-60"
-                      duration={5}
-                      delay={0}
-                      immediate
-                    />
-                  </motion.div>
-                </AnimatePresence>
+                {/* Slide 0 (lightbulb): pure CSS animation — starts instantly with HTML, no JS needed */}
+                {activeHeroSlide === 0 && (
+                  <div
+                    className="absolute inset-0 opacity-60"
+                    role="img"
+                    aria-label={heroSlides[0].alt}
+                    dangerouslySetInnerHTML={{ __html: IDEA_CSS_SVG }}
+                  />
+                )}
+                {/* Other slides: GSAP-based animation */}
+                {activeHeroSlide !== 0 && (
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeHeroSlide}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.5 }}
+                      className="absolute inset-0"
+                    >
+                      {heroSlides[activeHeroSlide].src ? (
+                        <AnimatedIllustration
+                          src={heroSlides[activeHeroSlide].src}
+                          alt={heroSlides[activeHeroSlide].alt}
+                          width={400}
+                          height={400}
+                          className="opacity-60"
+                          duration={2.5}
+                          delay={0}
+                          stagger={0.03}
+                          immediate
+                        />
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center text-lg text-gray-300">
+                          {/* placeholder — dodaj SVG */}
+                        </div>
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
+                )}
               </div>
               <div className="mt-12 flex items-center gap-3">
                 {heroSlides.map((_, i) => (

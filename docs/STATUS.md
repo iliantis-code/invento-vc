@@ -2,10 +2,22 @@
 
 ## Aktualny stan
 - **Branch**: `main`
-- **Faza**: Aktywny redesign V3. Strona główna uproszczona (usunięte stats, logo band), nowe SVG lokalizacji (Boston, Zurich), cała struktura skonsolidowana pod `/v3/*`. Schemat podstron ustalony.
+- **Faza**: Aktywny redesign V3. Hero carousel naprawiony — żarówka z natychmiastową animacją CSS (zero opóźnienia), mózg z prefetch. SVG żarówki rozbity na 5 ścieżek. Slidy 3-4 puste (placeholder).
 
 ## Ostatnie zmiany
 <!-- /wrap dopisuje nowe wpisy tutaj, najnowsze na górze -->
+
+### 2026-03-13 — Hero carousel: natychmiastowa animacja CSS, rozbicie SVG żarówki
+- **SVG idea.svg rozbity** z 1 path na 5 (podstawa, trzonek, żarnik, bańka, powrót) — GSAP DrawSVG animuje każdą część osobno ze staggerem
+- **Slidy 3-4 hero carousel** ustawione na `src: null` (były duplikatem żarówki)
+- **Animacja hero przyspieszona**: duration 5→2.5s, stagger 0.08→0.03s
+- **Pure CSS animation dla hero żarówki**: `@keyframes` z `stroke-dasharray/dashoffset` w inline SVG. Startuje natychmiast z parsowaniem HTML — zero zależności od JS/React/GSAP
+- **SVG cache + prefetch**: moduł-level `svgCache` Map + `prefetchSvg()` eksportowany z AnimatedIllustration. Brain SVG prefetchowany przy imporcie strony
+- **Preload w head**: `<link rel="preload">` dla brain SVG w layout.tsx
+- **AnimatedIllustration**: nowy prop `inlineSvg` (pomija fetch), `prefetchSvg` export
+- Decyzja: CHOSE pure CSS @keyframes dla hero SVG BECAUSE jedyny sposób na animację bez czekania na JS hydration (REJECTED GSAP z inlineSvg BECAUSE useLayoutEffect wymaga hydration — 2-3s opóźnienia na dev)
+- Decyzja: CHOSE hybrid CSS (hero) + GSAP (reszta) BECAUSE hero above-the-fold wymaga instant start, reszta poniżej scrollu — JS załadowany zanim user doscrolluje
+- stroke-width żarówki hero: 1.2 (cienka, delikatna linia)
 
 ### 2026-03-11 — Konsolidacja V3, SVG lokalizacji, uproszczenie strony
 - **Backup Home V1** (`/v3/home-v1`) — kopia V3 sprzed zmian
@@ -48,22 +60,6 @@
 - Decyzja: CHOSE `strokeWidth:` (CSS inline) zamiast `attr: { "stroke-width": }` (SVG attribute) BECAUSE inline style ma najwyższą CSS specificity i zawsze wygrywa nad class-based rules (REJECTED czyszczenie `<style>` textContent BECAUSE nie działa niezawodnie, CDATA/browser caching issues)
 - Decyzja: CHOSE numery 01-06 w features grid BECAUSE pasują do ręcznych ilustracji lepiej niż Phosphor ikony (REJECTED Phosphor ikony BECAUSE zbyt generyczne, nie pasują do hand-drawn stylu)
 
-### 2026-03-02 — Logotypy spółek, nawigacja, design V5
-- **Logotypy spółek pobrane** z invento.vc (12 z 13 — My Owl nie znaleziony, usunięty z listy). Zapisane w `public/logos/`. Podmienione tekstowe nazwy na obrazki w V1, V2, V5
-- **V1 portfolio**: logotypy w białych kartach (h-16, grayscale → kolor on hover, `group-hover`)
-- **V2 portfolio**: logotypy (h-8, grayscale → kolor on hover). Nav zmieniony z białego na dark (jak V5)
-- **V5 hero**: marquee (auto-scroll 120s) z logotypami — `invert mix-blend-screen opacity-60`, `h-20`. Browser mockup usunięty
-- **V5 design**: niebieska kropka (blue-500) w nagłówkach ("founders.", "sectors."), "Get in touch" button → blue-500, SVG sektorów w kolorze blue-500 przez `[&_path]:!stroke-blue-500`
-- **V5 sektory**: layout 3+2 (flex-wrap 33%), SVG powiększone do 160x160
-- **V3**: ikonki Phosphor w hero → szare kropki (gray-400), features → niebieskie kropki (blue-600), "deeptech founders" → blue-600
-- **Nav/Footer**: ukryte na V2/V5 (mają własne), widoczne na V1/team/about. Showroom (/) — tylko logo bez linków
-- **Team**: usunięta animacja GSAP z ilustracji ludzi → statyczny `<img>`
-- **About V2**: naprawione 404 ilustracji (microchip ai.svg → robot.svg, VR.svg → handshake.svg)
-- **AnimatedIllustration**: nowy prop `strokeScale` (domyślnie 0.35) — pozwala kontrolować grubość stroke per instancję
-- FAILED: `strokeScale` dla MedTech/Industry 4.0 — mimo zmiany wartości stroke renderuje się gruby. Problem prawdopodobnie w tym że SVG mają inline stroke-width w `<style>` bloku które nadpisują GSAP. Wymaga debugowania w następnej sesji
-- FAILED: `brightness-0 invert` na logotypach z białym tłem (JPG/PNG) — daje jednolite szare prostokąty bo białe tło też się invertuje. Rozwiązanie: `invert mix-blend-screen` (czarne staje się przezroczyste w trybie screen)
-- Decyzja: CHOSE `invert mix-blend-screen` dla logotypów na ciemnym tle BECAUSE jedyny sposób na przezroczyste tło bez konwersji do PNG z alpha (REJECTED brightness-0 invert BECAUSE zamienia białe tło w szary prostokąt)
-- Decyzja: CHOSE usunięcie My Owl z portfolio BECAUSE logo niedostępne na serwerze WP pod żadnym wariantem URL
 
 ## Decyzje
 | Data | Decyzja | Dlaczego | Odrzucone |
@@ -85,6 +81,9 @@
 | 2026-03-11 | Schemat podstron: nav fixed + logo only + breadcrumb | Spójność pozycji logo, max-w-6xl px-6 pt-28 | Back w navie po prawej (obco wyglądało) |
 | 2026-03-11 | OpenCV kontury→Bezier do konwersji PNG→SVG | vtracer segfault, pypotrace nie kompiluje się na Win | vtracer, pypotrace |
 | 2026-03-11 | Team 4 osoby (Robert, Bartosz, Sven, Daga) | Decyzja Macieja — reszta usunięta z V3 | 8-osobowy team |
+| 2026-03-13 | Pure CSS @keyframes dla hero SVG | Zero opóźnienia — animacja startuje z HTML parse, bez czekania na JS | GSAP z inlineSvg (wymaga hydration) |
+| 2026-03-13 | Hybrid: CSS hero + GSAP reszta | Hero above-the-fold = instant, reszta below-fold = JS gotowy po scrollu | Pełne CSS (brak ScrollTrigger), pełne GSAP (opóźnienie hero) |
+| 2026-03-13 | Rozbicie idea.svg na 5 path | 1 path = brak staggeru, animacja wygląda jak flash końcówki | Zostawienie 1 path |
 
 ## Co nie zadziałało
 - **Figma MCP** — brak fontFamily, kruchy layout, tool limitations

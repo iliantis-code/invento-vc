@@ -35,6 +35,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pl" className={`${inter.variable} ${instrumentSerif.variable} ${jakarta.variable}`}>
+      <head>
+        <link rel="preload" href="/illustrations/burza mozgow.svg" as="fetch" crossOrigin="anonymous" />
+      </head>
       <body className="font-sans text-navy antialiased">
         <Nav />
         <main>{children}</main>

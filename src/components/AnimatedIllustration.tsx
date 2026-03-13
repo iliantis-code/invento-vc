@@ -7,6 +7,21 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(DrawSVGPlugin, ScrollTrigger);
 
+// Module-level SVG cache — fetch starts immediately on first request,
+// subsequent calls reuse the same promise (no waterfall)
+const svgCache = new Map<string, Promise<string>>();
+export function prefetchSvg(src: string) { fetchSvg(src); }
+function fetchSvg(src: string): Promise<string> {
+  let cached = svgCache.get(src);
+  if (!cached) {
+    cached = fetch(src)
+      .then((res) => res.text())
+      .then((text) => text.replace(/stroke-width:[^;}"]+[;]?/g, ""));
+    svgCache.set(src, cached);
+  }
+  return cached;
+}
+
 interface AnimatedIllustrationProps {
   src: string;
   alt: string;
@@ -23,6 +38,8 @@ interface AnimatedIllustrationProps {
   strokeScale?: number;
   /** Skip ScrollTrigger — start animation immediately on mount */
   immediate?: boolean;
+  /** Pre-cleaned SVG markup — skips fetch entirely, animation starts on first render */
+  inlineSvg?: string;
 }
 
 export const AnimatedIllustration = memo(function AnimatedIllustration({
@@ -37,21 +54,16 @@ export const AnimatedIllustration = memo(function AnimatedIllustration({
   stagger = 0.08,
   strokeScale = 0.35,
   immediate = false,
+  inlineSvg,
 }: AnimatedIllustrationProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [svgContent, setSvgContent] = useState<string | null>(null);
+  const [svgContent, setSvgContent] = useState<string | null>(inlineSvg ?? null);
 
   useEffect(() => {
-    fetch(src)
-      .then((res) => res.text())
-      .then((text) => {
-        // Remove stroke-width from CSS <style> blocks BEFORE injecting into DOM.
-        // This prevents any frame where the CSS rule could flash thick strokes
-        // before GSAP takes over stroke-width control.
-        const cleaned = text.replace(/stroke-width:[^;}"]+[;]?/g, "");
-        setSvgContent(cleaned);
-      });
-  }, [src]);
+    if (!inlineSvg) {
+      fetchSvg(src).then(setSvgContent);
+    }
+  }, [src, inlineSvg]);
 
   useLayoutEffect(() => {
     if (!svgContent || !containerRef.current) return;
